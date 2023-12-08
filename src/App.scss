@@ -1,0 +1,22 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&family=Raleway&display=swap');
+
+@font-face {
+  font-family: 'Saunde';
+  src: url('./assets/fonts/Saunde.otf') format('opentype');
+}
+
+.App {
+  text-align: center;
+}
+
+.font-saunde {
+  font-family: 'Saunde';
+}
+
+.font-raleway {
+  font-family: 'Raleway', sans-serif;
+}
