@@ -8,8 +8,8 @@ const SpinningCircle = () => {
   const circleRef = useRef(null);
 
   useEffect(() => {
-    gsap.to(flowerRef.current, {rotation: 3600, repeat: -1, duration: 100});
-    gsap.to(circleRef.current, {rotation: -3600, repeat: -1, duration: 100, repeatRefresh: true});
+    gsap.to(flowerRef.current, {rotation: 3600, repeat: -1, duration: 200, repeatRefresh: true});
+    gsap.to(circleRef.current, {rotation: -3600, repeat: -1, duration: 200, repeatRefresh: true});
   }, []);
 
   return (
