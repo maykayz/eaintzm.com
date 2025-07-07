@@ -11,6 +11,13 @@
 
 .App {
   text-align: center;
+  overflow-x: hidden;
+}
+
+.section {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
 }
 
 .font-saunde {
@@ -19,4 +26,27 @@
 
 .font-raleway {
   font-family: 'Raleway', sans-serif;
+}
+
+#portfolio-container {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #E9BB19 transparent;
+}
+
+#portfolio-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+#portfolio-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#portfolio-container::-webkit-scrollbar-thumb {
+  background: #E9BB19;
+  border-radius: 4px;
+}
+
+#portfolio-container::-webkit-scrollbar-thumb:hover {
+  background: #FB861B;
 }
