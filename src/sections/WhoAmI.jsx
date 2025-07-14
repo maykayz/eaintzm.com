@@ -4,13 +4,13 @@ import SideProfile from "../assets/images/FrontProfile2.png"
 const WhoAmI = () => {
   return (
     <section className="flex flex-col justify-center align-center md:gap-4 gap-1 section">
-      <div className="grid md:grid-cols-4 grid-cols-1">
+      <div className="grid md:grid-cols-4 grid-cols-1 items-center">
         <div className="col-span-1 col-start-2 relative" data-aos="fade-right" data-aos-duration="1000">
-          <div className="absolute flex flex-col items-start gap-2 left-0 top-0 -translate-x-1/2 -translate-y-1/2 z-10" data-aos="zoom-in" data-aos-delay="200">
+          <div className="absolute flex flex-col items-start gap-2 left-0 -top-3 -translate-x-1/2 -translate-y-1/2 z-10">
             <h5 className="text-white font-saunde text-xl">Since</h5>
             <h5 className="text-white font-saunde text-5xl">20<span className="text-secondary">17</span></h5>
           </div>
-          <div className="absolute left-0 bottom-0 -translate-x-1/2 -translate-y-[50px]" data-aos="fade-up" data-aos-delay="400">
+          <div className="absolute left-0 top-[300px] -translate-x-1/2 -translate-y-[50px]">
             <img src={ProfileLine} alt="Profile Line"/>
           </div>
           <div className="max-h-96 ">

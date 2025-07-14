@@ -16,7 +16,7 @@ const Header = () => {
   return (
     <header className="absolute top-0 right-0 left-0 py-7 bg-primary z-10">
       <div className="flex flex-row justify-between items-baseline container mx-auto">
-        <h1 className="text-secondary font-saunde text-[22px] w-28">May K</h1>
+        <h1 className="text-secondary font-saunde text-[22px] w-28">MayK</h1>
         <div className="flex flex-row">
           {/* <ul className="flex flex-row gap-8">
             <li>

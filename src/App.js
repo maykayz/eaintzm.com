@@ -5,7 +5,7 @@ import Skills from "./sections/Skills";
 import Experience from "./sections/Experience";
 // import Portfolio from "./sections/Portfolio";
 import ContactMe from "./sections/ContactMe";
-import Footer from "./components/footer";
+// import Footer from "./components/footer";
 import Header from "./components/header";
 import SideNav from "./components/sidenav";
 import SpinningCircle from "./components/spinningCircle";
@@ -163,7 +163,7 @@ function App() {
 			<div ref={addToRefs}>
 				<ContactMe />
 			</div>
-			<Footer />
+			{/* <Footer /> */}
 		</div>
 	);
 }

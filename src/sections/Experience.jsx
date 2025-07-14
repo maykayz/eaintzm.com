@@ -31,17 +31,17 @@ const jobList = [
 ];
 
 const JobCard = ({ company, position, duration, index }) => (
-           <div className={`relative border p-8 ${index === 0 ? "border-secondary" : "border-stone-500"}`} data-aos="fade-right" data-aos-duration="1000">
+           <div className={`relative border p-4 ${index === 0 ? "border-secondary" : "border-stone-500"}`} data-aos="fade-right" data-aos-duration="1000">
            <div className="flex flex-row justify-between items-center mb-4">
-            <h5 className="text-white text-[22px] font-raleway" data-aos="fade-up" data-aos-delay="300">
+            <h5 className="text-white text-[18px] font-raleway" data-aos="fade-up" data-aos-delay="300">
                 {company}
             </h5>
-               <h5 className="text-white text-[22px]  font-raleway" data-aos="fade-up" data-aos-delay="300">
+               <h5 className="text-white text-[18px]  font-raleway" data-aos="fade-up" data-aos-delay="300">
                 {duration}
             </h5>
            </div>
               <div className="flex">
-                <h5 className="text-white text-[28px] font-bold font-raleway" data-aos="fade-up" data-aos-delay="300">
+                <h5 className="text-white text-[22px] font-bold font-raleway" data-aos="fade-up" data-aos-delay="300">
                 {position}
             </h5>
               </div>
@@ -62,17 +62,17 @@ const Experience = () => {
     return (
     <section className="flex flex-col justify-center align-center md:gap-4 gap-1 section">
      <div className="container mx-auto px-4">
-         <div className="grid md:grid-cols-2 grid-cols-1 mb-24">
+         <div className="grid md:grid-cols-2 grid-cols-1 mb-12">
         <div className="" data-aos="fade-right" data-aos-duration="1000">
             <h1 className="hero__title text-white font-saunde lg:text-xl md:text-6xl text-6xl text-left" data-aos="fade-up" data-aos-duration="1000">
                 Recent Work
             </h1>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
                 <div>
-                    <h5 className="text-white font-saunde lg:text-7xl md:text-2xl text-2xl mb-8" data-aos="fade-up" data-aos-delay="300">
+                    <h5 className="text-white font-saunde lg:text-6xl md:text-2xl text-2xl mb-8" data-aos="fade-up" data-aos-delay="300">
                     PROFESSIONAL
                 </h5>
-                <h5 className="text-secondary font-saunde lg:text-7xl md:text-2xl text-2xl" data-aos="fade-up" data-aos-delay="300">
+                <h5 className="text-secondary font-saunde lg:text-6xl md:text-2xl text-2xl" data-aos="fade-up" data-aos-delay="300">
                     EXPERIENCE
                 </h5>
                 </div>
@@ -100,14 +100,15 @@ const Experience = () => {
             ))
         }
       </div>
-     </div>
-     <div className="flex justify-center items-center mt-16" data-aos="fade-up" data-aos-duration="1000">
+           <div className="flex justify-center items-center mt-6" data-aos="fade-up" data-aos-delay="800">
         <OutlineButton
         onClick={handlePDFDownload}
         >
         Download Resume
      </OutlineButton>
      </div>
+     </div>
+
     </section>
     )
 }
