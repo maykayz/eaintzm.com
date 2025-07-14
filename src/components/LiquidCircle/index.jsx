@@ -1,6 +1,6 @@
 import { color } from 'd3-color';
 import { interpolateRgb } from 'd3-interpolate';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import LiquidFillGauge from 'react-liquid-gauge';
 import { colors } from './constants';
 
@@ -38,6 +38,10 @@ const LiquidCircle = ({ label = "Skill", percentage = 80, variant="yellow", star
     const handleMouseLeave = () => {
         setValue(startPercentage);
     };
+
+    useEffect(() => {
+        setValue(startPercentage);
+    }, [startPercentage]);
 
     return (
         <div

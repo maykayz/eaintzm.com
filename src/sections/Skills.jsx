@@ -1,6 +1,6 @@
 import LiquidCircle from "../components/LiquidCircle";
 
-import { firstSkillRows, secondSkillRows } from "../data/skills"; // Assuming you have a data file for skills
+import { firstSkillRows, secondSkillRows } from "../data/skills";
 
 const Skills = () => {
     return (
@@ -21,7 +21,7 @@ const Skills = () => {
                                 label={skill.label}
                                 percentage={skill.percentage}
                                 variant={skill.variant}
-                                startPercentage={skill.startPercentage} // Added startPercentage prop
+                                startPercentage={skill.startPercentage} 
                             />
                         </div>
                     ))
@@ -35,7 +35,7 @@ const Skills = () => {
                                 label={skill.label}
                                 percentage={skill.percentage}
                                 variant={skill.variant}
-                                startPercentage={skill.startPercentage} // Added startPercentage prop
+                                startPercentage={skill.startPercentage} 
                             />
                         </div>
                     ))

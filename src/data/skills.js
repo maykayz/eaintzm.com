@@ -1,14 +1,14 @@
 export const firstSkillRows = [
-    { label: "JavaScript", percentage: 85, variant: "yellow" , startPercentage: 40},
-    { label: "Next JS", percentage: 80, variant: "white" , startPercentage: 35},
-    { label: "React", percentage: 90, variant: "yellow" , startPercentage: 45},
+    { label: "React", percentage: 100, variant: "yellow" , startPercentage: 75},
+    { label: "Next", percentage: 100, variant: "white" , startPercentage: 70},
+    { label: "Tailwind", percentage: 100, variant: "yellow" , startPercentage: 60},
 ]
 export const secondSkillRows = [
-    { label: "HTML", percentage: 90, variant: "yellow" , startPercentage: 45},
-    { label: "TypeScript", percentage: 75, variant: "white" , startPercentage: 33},
-    { label: "Node JS", percentage: 60, variant: "yellow" , startPercentage: 22},
-    { label: "Vue JS", percentage: 60, variant: "white" , startPercentage: 55},
-    { label: "Node JS", percentage: 60, variant: "yellow" , startPercentage: 25},
-    { label: "Vue JS", percentage: 60, variant: "white" , startPercentage: 50},
+    { label: "Javascript", percentage: 100, variant: "yellow" , startPercentage: 70},
+    { label: "TypeScript", percentage: 100, variant: "white" , startPercentage: 60},
+    { label: "Node.js", percentage: 100, variant: "yellow" , startPercentage: 50},
+    { label: "MUI", percentage: 100, variant: "white" , startPercentage: 65},
+    { label: "Google Analytics", percentage: 100, variant: "yellow" , startPercentage: 76},
+    { label: "Vue", percentage: 100, variant: "white" , startPercentage: 52},
 
 ]
