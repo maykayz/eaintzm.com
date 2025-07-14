@@ -1,5 +1,6 @@
 import FlowerImage from "../assets/images/Flower.svg";
 import {OutlineButton} from "../components/Buttons";
+import CVPDF from '../assets/files/EaintThazinMyint.pdf';
 
 const jobList = [
     {
@@ -48,6 +49,16 @@ const JobCard = ({ company, position, duration, index }) => (
 )
 
 const Experience = () => {
+      const handlePDFDownload = () => {
+        const link = document.createElement('a');
+        link.href = CVPDF; // Path to your PDF file
+        link.target = '_blank'; // Open in a new tab
+        link.rel = 'noopener noreferrer'; // Security best practice
+        link.download = CVPDF;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      };
     return (
     <section className="flex flex-col justify-center align-center md:gap-4 gap-1 section">
      <div className="container mx-auto px-4">
@@ -91,7 +102,9 @@ const Experience = () => {
       </div>
      </div>
      <div className="flex justify-center items-center mt-16" data-aos="fade-up" data-aos-duration="1000">
-        <OutlineButton>
+        <OutlineButton
+        onClick={handlePDFDownload}
+        >
         Download Resume
      </OutlineButton>
      </div>

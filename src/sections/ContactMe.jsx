@@ -18,7 +18,11 @@ const ContactMe = () => {
 				Let's start from <span className="text-secondary">here</span>
 			</h1>
 			<div className="mt-10" data-aos="fade-up" data-aos-delay="300">
-				<OutlineButton>H E L L O !</OutlineButton>
+				<OutlineButton>
+                       <a href="mailto:ms.eaintthazinmyint@gmail.com" className="text-white font-saunde text-center">
+          H E L L O !
+        </a>
+                    </OutlineButton>
 			</div>
 		</section>
 	);
