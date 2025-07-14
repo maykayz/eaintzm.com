@@ -1,13 +1,11 @@
 import { color } from 'd3-color';
 import { interpolateRgb } from 'd3-interpolate';
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 import LiquidFillGauge from 'react-liquid-gauge';
 import { colors } from './constants';
 
 const LiquidCircle = ({ label = "Skill", percentage = 80, variant="yellow", startPercentage = 0 }) => {
     const [value, setValue] = useState(startPercentage);
-    const [isHovered, setIsHovered] = useState(false);
 
     const radius = 80;
     const interpolate = interpolateRgb(colors[variant].start, colors[variant].end);
@@ -34,12 +32,10 @@ const LiquidCircle = ({ label = "Skill", percentage = 80, variant="yellow", star
     ];
 
     const handleMouseEnter = () => {
-        setIsHovered(true);
         setValue(percentage);
     };
 
     const handleMouseLeave = () => {
-        setIsHovered(false);
         setValue(startPercentage);
     };
 
@@ -59,12 +55,8 @@ const LiquidCircle = ({ label = "Skill", percentage = 80, variant="yellow", star
                 textOffsetX={0}
                 textOffsetY={0}
                 textRenderer={(props) => {
-                    const value = Math.round(props.value);
                     const radius = Math.min(props.height / 2, props.width / 2);
                     const textPixels = (props.textSize * radius / 2);
-                    const valueStyle = {
-                        fontSize: textPixels
-                    };
                     const labelStyle = {
                         fontSize: textPixels * 0.35,
                         fontWeight: 'bold'
