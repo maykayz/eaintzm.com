@@ -72,7 +72,6 @@ const LiquidCircle = ({ label = "Skill", percentage = 80, variant="yellow", star
                 waveAnimation
                 waveFrequency={2}
                 waveAmplitude={5}
-				waveFrequency={2}
 				gradient
 				margin={0}
 				innerRadius={0.99}
