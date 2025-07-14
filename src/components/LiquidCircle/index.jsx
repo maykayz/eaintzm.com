@@ -75,7 +75,6 @@ const LiquidCircle = ({ label = "Skill", percentage = 80, variant="yellow", star
 				gradient
 				margin={0}
 				innerRadius={0.99}
-                gradient
                 gradientStops={gradientStops}
                 circleStyle={{
                     fill: fillColor,
