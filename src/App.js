@@ -8,7 +8,6 @@ import Hero from "./sections/Hero";
 import WhoAmI from "./sections/WhoAmI";
 import Skills from "./sections/Skills";
 import Experience from "./sections/Experience";
-import Portfolio from "./sections/Portfolio";
 import ContactMe from "./sections/ContactMe";
 import Header from "./components/header";
 import SideNav from "./components/sidenav";
