@@ -7,7 +7,9 @@ import { colors } from './constants';
 const LiquidCircle = ({ label = "Skill", percentage = 80, variant="yellow", startPercentage = 0 }) => {
     const [value, setValue] = useState(startPercentage);
 
-    const radius = 80;
+    // check device media query for mobile
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    const radius = isMobile ? 40 : 80;
     const interpolate = interpolateRgb(colors[variant].start, colors[variant].end);
     const fillColor = interpolate(value / 100);
     const gradientStops = [
