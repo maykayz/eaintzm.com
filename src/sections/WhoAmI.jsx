@@ -14,7 +14,7 @@ const WhoAmI = () => {
             <img src={ProfileLine} alt="Profile Line"/>
           </div>
           <div className="md:max-h-96 max-h-60">
-            <img src={SideProfile} alt="flower" className="rounded-[20px] md:h-[40vh] h-[30vh] bg-gradient-to-tl from-[#1F1F1F] to-[#cdcdcd]" />
+            <img src={SideProfile} alt="flower" className="rounded-[20px] h-[337px] bg-gradient-to-tl from-[#1F1F1F] to-[#cdcdcd]" />
           </div>
         </div>
         <div className="md:col-span-2 md:col-start-3 flex flex-col justify-center items-start ml-16 w-2/3 md:gap-10 gap-4 md:mt-0 mt-16" data-aos="fade-left" data-aos-duration="1000">

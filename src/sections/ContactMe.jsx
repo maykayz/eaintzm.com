@@ -1,4 +1,5 @@
 import {OutlineButton} from "../components/Buttons";
+import SideNav from "../components/sidenav";
 
 const ContactMe = () => {
 	return (
@@ -11,7 +12,7 @@ const ContactMe = () => {
 				Interested in working together?
 			</h1>
 			<h1
-				className="hero__title text-white font-saunde lg:text-8xl md:text-6xl text-[1.8rem] uppercase"
+				className="hero__title text-white font-saunde lg:text-8xl md:text-6xl text-[1.4rem] uppercase"
 				data-aos="fade-up"
 				data-aos-duration="1000"
 			>
@@ -20,9 +21,12 @@ const ContactMe = () => {
 			<div className="md:mt-10 mt-8" data-aos="fade-up" data-aos-delay="300">
 				<OutlineButton>
                        <a href="mailto:ms.eaintthazinmyint@gmail.com" className="text-white font-saunde text-center">
-          H E L L O !
+          Say Hi
         </a>
                     </OutlineButton>
+			</div>
+			<div className="block md:hidden">
+<SideNav />
 			</div>
 		</section>
 	);

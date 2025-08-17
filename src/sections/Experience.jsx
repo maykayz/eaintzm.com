@@ -64,15 +64,15 @@ const Experience = () => {
      <div className="container mx-auto px-4">
          <div className="grid md:grid-cols-2 grid-cols-1 mb-12">
         <div className="" data-aos="fade-right" data-aos-duration="1000">
-            <h1 className="hero__title text-white font-saunde lg:text-xl md:text-6xl text-xl text-left" data-aos="fade-up" data-aos-duration="1000">
+            <h1 className="hidden md:block hero__title text-white font-saunde lg:text-xl md:text-6xl text-xl text-left" data-aos="fade-up" data-aos-duration="1000">
                 Recent Work
             </h1>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-8 md:mt-10 mt-4">
                 <div>
-                    <h5 className="text-white font-saunde lg:text-6xl md:text-2xl text-[3rem] md:mb-8 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <h5 className="text-white font-saunde lg:text-6xl md:text-2xl text-[2rem] md:mb-8 md:mb-4" data-aos="fade-up" data-aos-delay="300">
                     PROFESSIONAL
                 </h5>
-                <h5 className="text-secondary font-saunde lg:text-6xl md:text-2xl text-[3rem]" data-aos="fade-up" data-aos-delay="300">
+                <h5 className="text-secondary font-saunde lg:text-6xl md:text-2xl text-[2rem]" data-aos="fade-up" data-aos-delay="300">
                     EXPERIENCE
                 </h5>
                 </div>

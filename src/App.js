@@ -74,8 +74,10 @@ function App() {
 	return (
 		<div className="App bg-primary">
 			<Header />
-			<SideNav />
-			<SpinningCircle />
+			<div className="hidden md:block">
+				<SideNav />
+				<SpinningCircle />
+			</div>
 
 			{[Hero, WhoAmI, Skills, Experience, ContactMe].map((Section, index) => (
 				<div
