@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from "react";
 import {gsap} from "gsap";
 import {ScrollToPlugin} from "gsap/ScrollToPlugin";
+import AOS from "aos";
 
 import Hero from "./sections/Hero";
 import WhoAmI from "./sections/WhoAmI";
@@ -11,7 +12,7 @@ import Header from "./components/header";
 import SideNav from "./components/sidenav";
 import SpinningCircle from "./components/spinningCircle";
 import "./App.scss";
-import AOS from "aos";
+
 import "aos/dist/aos.css"; // make sure AOS styles are imported
 
 gsap.registerPlugin(ScrollToPlugin);
@@ -59,9 +60,14 @@ function App() {
 
 		window.addEventListener("wheel", handleWheel, {passive: false});
 
+		// Capture the timeout ref value to use in cleanup
+		const timeoutRef = scrollTimeoutRef.current;
+
 		return () => {
 			window.removeEventListener("wheel", handleWheel);
-			clearTimeout(scrollTimeoutRef.current);
+			if (timeoutRef) {
+				clearTimeout(timeoutRef);
+			}
 		};
 	}, [currentSection]);
 
