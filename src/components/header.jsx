@@ -14,14 +14,12 @@ const Header = () => {
     document.body.removeChild(link);
   };
   return (
-    <header className="absolute top-0 right-0 left-0 py-7 bg-primary z-10">
-      <div className="flex flex-row justify-between items-baseline container mx-auto">
-        <h1 className="text-secondary font-saunde text-[22px] w-28">MayK</h1>
-        <div className="w-auto mr-6">
-          <OutlineButton
-            onClick={handlePDFDownload}
-          >Download CV</OutlineButton>
-        </div>
+    <header className="absolute top-0 right-0 left-0 py-7 bg-primary z-10 px-6 md:px-12">
+      <div className="flex flex-row justify-between items-baseline">
+        <h1 className="text-secondary font-saunde text-[22px] w-28">Eaint</h1>
+        <OutlineButton
+          onClick={handlePDFDownload}
+        >Download CV</OutlineButton>
       </div>
     </header>
   );

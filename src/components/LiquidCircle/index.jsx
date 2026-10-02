@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import LiquidFillGauge from 'react-liquid-gauge';
 import { colors } from './constants';
 
-const LiquidCircle = ({ label = "Skill", percentage = 80, variant="yellow", startPercentage = 0 }) => {
+const LiquidCircle = ({ label = "Skill", percentage = 80, variant="maroon", startPercentage = 0 }) => {
     const [value, setValue] = useState(startPercentage);
 
     // check device media query for mobile
@@ -12,6 +12,7 @@ const LiquidCircle = ({ label = "Skill", percentage = 80, variant="yellow", star
     const radius = isMobile ? 40 : 80;
     const interpolate = interpolateRgb(colors[variant].start, colors[variant].end);
     const fillColor = interpolate(value / 100);
+    const textColor = variant === "ivory" ? "#121011" : "#F3EDE4";
     const gradientStops = [
         {
             key: '0%',
@@ -91,11 +92,11 @@ const LiquidCircle = ({ label = "Skill", percentage = 80, variant="yellow", star
                     fill: fillColor
                 }}
                 textStyle={{
-                    fill: color('#fff').toString(),
+                    fill: color(textColor).toString(),
                     fontFamily: 'Arial'
                 }}
                 waveTextStyle={{
-                    fill: color('#fff').toString(),
+                    fill: color(textColor).toString(),
                     fontFamily: 'Arial'
                 }}
             />

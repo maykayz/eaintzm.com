@@ -1,187 +1,332 @@
-import { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
-import Dopa from '../assets/images/portfolio/dopa.png';
-import Datawow from '../assets/images/portfolio/datawow.png';
-import DatawowBlog from '../assets/images/portfolio/datawow-blog.png';
-import DriveSafe from '../assets/images/portfolio/drivesafe.png';
-import DriveSafeDrvr from '../assets/images/portfolio/drivesafe-map.jpg';
+import { useLayoutEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Dopa from "../assets/images/portfolio/dopa.png";
+import Datawow from "../assets/images/portfolio/datawow.png";
+import DatawowBlog from "../assets/images/portfolio/datawow-blog.png";
+import DriveSafe from "../assets/images/portfolio/drivesafe.png";
+import DriveSafeDrvr from "../assets/images/portfolio/drivesafe-map.jpg";
+import MyMemorial from "../assets/images/portfolio/mymemorial.jpg";
+import EasyPay from "../assets/images/portfolio/easypay.jpg";
+import Telenor from "../assets/images/portfolio/telenor.jpg";
+import PizzaHut from "../assets/images/portfolio/pizzahut.jpg";
+import ParticleField from "../components/ParticleField";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const projects = [
+    {
+        category: "Gacha Web App · Japan",
+        status: "Live",
+        title: "Dopa",
+        url: "dopa.co.jp",
+        description: "A gacha-style rewards web app built for a Japanese client, with smooth animated reveals designed for mobile-first play.",
+        features: ["Mobile-first gacha UI", "Animated reveal sequences", "Localized for JP audience", "Lightweight, fast load"],
+        tech: ["React", "Next.js", "TypeScript"],
+        image: Dopa,
+    },
+    {
+        category: "Memorial Page · Rapid Data GmbH",
+        status: "Live",
+        title: "MyMemorial",
+        url: "mymemorial.com",
+        description: "Memorial page product for Rapid Data GmbH, built entirely through AI-driven development, where families and friends share photos and memories of the deceased, managed by funeral homes through our ERP.",
+        features: ["Memory wall & gallery", "Condolence & flower requests", "Death notice & funeral details", "White-labeled per funeral house"],
+        tech: [".NET", "PostgreSQL", "Next.js", "Jest", "Azure", "Docker", "Matomo", "CookieYes", "Webpack"],
+        image: MyMemorial,
+    },
+    {
+        category: "Company Website · Thailand",
+        status: "Live",
+        title: "Datawow",
+        url: "datawow.co",
+        description: "Company website for Datawow, a software studio in Bangkok, showcasing products, case studies and team culture.",
+        features: ["Product showcase", "Team & culture pages", "SEO-optimized structure", "Google Analytics & GTM"],
+        tech: ["Next.js", "Tailwind CSS", "Storybook"],
+        image: Datawow,
+    },
+    {
+        category: "Engineering Blog · Thailand",
+        status: "Live",
+        title: "Datawow Blog",
+        url: "datawow.co/blog",
+        description: "Engineering and product blog for Datawow, built for fast publishing and SEO-friendly article pages.",
+        features: ["Fast publishing workflow", "SEO-friendly article pages", "Google Search Console tracking", "Responsive reading layout"],
+        tech: ["Next.js", "TypeScript", "SEO"],
+        image: DatawowBlog,
+    },
+    {
+        category: "Fleet Portal · Thailand & Japan",
+        status: "Live",
+        title: "DriveSafe",
+        url: "drvr.co/drivesafe",
+        description: "Fleet management portal for a client, Nagase Thailand, and our own DriveSafe product. I designed the UI/UX and built the full frontend end to end.",
+        features: ["UI/UX design, end to end", "Real-time vehicle tracking", "Active hours & stop history", "Tire pressure monitoring"],
+        tech: ["React", "WebSocket", "Figma"],
+        image: DriveSafe,
+    },
+    {
+        category: "Live Map View · Thailand & Japan",
+        status: "Live",
+        title: "DriveSafe Map",
+        url: "drvr.co/map",
+        description: "Real-time map view inside DriveSafe, tracking driving status, stops and tire pressure over a live WebSocket feed.",
+        features: ["Live map tracking", "Driving status overlay", "Tire pressure display", "Stop & idle detection"],
+        tech: ["React", "WebSocket"],
+        image: DriveSafeDrvr,
+    },
+    {
+        category: "Mobile Money · Myanmar",
+        status: "Live",
+        title: "EasyPay",
+        url: "easypay.com.mm",
+        description: "Marketing website for EasyPay, a mobile money platform in Myanmar, built in Burmese for cash-in, cash-out and agent onboarding.",
+        features: ["Burmese localization", "Agent network pages", "USSD how-to guides", "Cash-in / cash-out flows"],
+        tech: ["HTML", "CSS", "JavaScript", "jQuery", "Bootstrap", "CMS"],
+        image: EasyPay,
+    },
+    {
+        category: "Telecom · Myanmar",
+        status: "Live",
+        title: "Telenor Myanmar",
+        url: "telenor.com.mm",
+        description: "Campaign microsite for Telenor Myanmar, a telecom operator, promoting mobile packages and device bundles for Myanmar customers.",
+        features: ["Package & bundle promos", "Device bundle showcase", "Burmese localization", "Mobile-first layout"],
+        tech: ["HTML", "CSS", "JavaScript", "jQuery", "Bootstrap", "CMS"],
+        image: Telenor,
+    },
+    {
+        category: "Food Delivery · Myanmar",
+        status: "Live",
+        title: "Pizza Hut Myanmar",
+        url: "pizzahut.com.mm",
+        description: "Online ordering site for Pizza Hut Myanmar, supporting delivery and pickup orders with promotions across the menu.",
+        features: ["Online ordering flow", "Delivery & pickup modes", "Promotions & deals", "Basket & checkout"],
+        tech: ["HTML", "CSS", "JavaScript", "jQuery", "Bootstrap", "CMS"],
+        image: PizzaHut,
+    },
+];
+
+const UNITS_PER_PROJECT = 2.4; // 1 unit = 100vh of scroll per project
 
 const Portfolio = () => {
-    const portfolioRef = useRef(null);
-    const imagesRef = useRef(null);
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [isScrolling, setIsScrolling] = useState(false);
-    const images = [Dopa, Datawow, DatawowBlog, DriveSafe, DriveSafeDrvr];
-    const imageNames = ['Dopa', 'Datawow', 'Datawow Blog', 'DriveSafe', 'DriveSafe Drvr'];
+    const wrapperRef = useRef(null);
+    const pinRef = useRef(null);
+    const panelRefs = useRef([]);
+    const textRefs = useRef([]);
+    const mockupRefs = useRef([]);
+    const tickRefs = useRef([]);
 
-    useEffect(() => {
-        let scrollTimeout;
-        let accumulatedDelta = 0;
-        const scrollThreshold = 50; // Minimum scroll amount needed to trigger navigation
+    useLayoutEffect(() => {
+        const ctx = gsap.context(() => {
+            const mm = gsap.matchMedia();
 
-        const handleScroll = (e) => {
-            if (!portfolioRef.current?.contains(e.target)) return;
-            
-            e.preventDefault();
-            e.stopPropagation();
-            
-            if (isScrolling) return;
-            
-            const delta = e.deltaY;
-            accumulatedDelta += delta;
-            
-            // Clear previous timeout
-            if (scrollTimeout) {
-                clearTimeout(scrollTimeout);
-            }
-            
-            // Set a timeout to handle the accumulated scroll
-            scrollTimeout = setTimeout(() => {
-                if (Math.abs(accumulatedDelta) >= scrollThreshold) {
-                    if (accumulatedDelta > 0 && currentIndex < images.length - 1) {
-                        // Scroll right to next image
-                        setIsScrolling(true);
-                        setCurrentIndex(prev => prev + 1);
-                        
-                        gsap.to(imagesRef.current, {
-                            x: -((currentIndex + 1) * window.innerWidth),
-                            duration: 0.8,
-                            ease: "power2.out",
-                            onComplete: () => {
-                                setTimeout(() => setIsScrolling(false), 300);
-                            }
-                        });
-                    } else if (accumulatedDelta < 0 && currentIndex > 0) {
-                        // Scroll left to previous image
-                        setIsScrolling(true);
-                        setCurrentIndex(prev => prev - 1);
-                        
-                        gsap.to(imagesRef.current, {
-                            x: -((currentIndex - 1) * window.innerWidth),
-                            duration: 0.8,
-                            ease: "power2.out",
-                            onComplete: () => {
-                                setTimeout(() => setIsScrolling(false), 300);
-                            }
-                        });
-                    } else if (accumulatedDelta > 0 && currentIndex === images.length - 1) {
-                        // At last image, allow normal scroll to next section
-                        // Remove event listener temporarily to allow normal scroll
-                        portfolioRef.current?.removeEventListener('wheel', handleScroll);
-                        portfolioRef.current?.removeEventListener('touchmove', handleTouchMove);
-                        setTimeout(() => {
-                            portfolioRef.current?.addEventListener('wheel', handleScroll, { passive: false });
-                            portfolioRef.current?.addEventListener('touchmove', handleTouchMove, { passive: false });
-                        }, 1000);
-                    }
-                }
-                accumulatedDelta = 0;
-            }, 50); // Debounce scroll events
-        };
+            mm.add("(min-width: 768px)", () => {
+                gsap.set(panelRefs.current, { opacity: 0 });
+                gsap.set(panelRefs.current[0], { opacity: 1 });
+                gsap.set(textRefs.current, { scale: 1 });
+                gsap.set(mockupRefs.current, { rotationY: 5, x: 40, transformPerspective: 800 });
+                gsap.set(mockupRefs.current[0], { rotationY: 0, x: 0 });
+                gsap.set(tickRefs.current, { backgroundColor: "#8C8178" });
+                gsap.set(tickRefs.current[0], { backgroundColor: "#7A2430" });
 
-        // Handle touch events for mobile/trackpad
-        let touchStartY = 0;
-        let touchStartX = 0;
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: wrapperRef.current,
+                        start: "top top",
+                        end: "bottom bottom",
+                        scrub: 0.8,
+                        pin: pinRef.current,
+                        pinSpacing: false,
+                        anticipatePin: 1,
+                    },
+                });
 
-        const handleTouchStart = (e) => {
-            if (!portfolioRef.current?.contains(e.target)) return;
-            touchStartY = e.touches[0].clientY;
-            touchStartX = e.touches[0].clientX;
-        };
+                projects.forEach((_, i) => {
+                    if (i === 0) return;
 
-        const handleTouchMove = (e) => {
-            if (!portfolioRef.current?.contains(e.target)) return;
-            if (isScrolling) return;
-            
-            const touchY = e.touches[0].clientY;
-            const touchX = e.touches[0].clientX;
-            const deltaY = touchStartY - touchY;
-            const deltaX = touchStartX - touchX;
-            
-            // Only handle horizontal swipes (ignore vertical scrolling)
-            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 30) {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                if (deltaX > 0 && currentIndex < images.length - 1) {
-                    // Swipe left to next image
-                    setIsScrolling(true);
-                    setCurrentIndex(prev => prev + 1);
-                    
-                    gsap.to(imagesRef.current, {
-                        x: -((currentIndex + 1) * window.innerWidth),
-                        duration: 0.8,
-                        ease: "power2.out",
-                        onComplete: () => {
-                            setTimeout(() => setIsScrolling(false), 300);
-                        }
-                    });
-                } else if (deltaX < 0 && currentIndex > 0) {
-                    // Swipe right to previous image
-                    setIsScrolling(true);
-                    setCurrentIndex(prev => prev - 1);
-                    
-                    gsap.to(imagesRef.current, {
-                        x: -((currentIndex - 1) * window.innerWidth),
-                        duration: 0.8,
-                        ease: "power2.out",
-                        onComplete: () => {
-                            setTimeout(() => setIsScrolling(false), 300);
-                        }
-                    });
-                }
-            }
-        };
+                    tl.addLabel(`proj${i}`)
+                        .to(panelRefs.current[i - 1], { opacity: 0, duration: 0.6 }, `proj${i}`)
+                        .to(textRefs.current[i - 1], { scale: 1.08, duration: 0.6 }, `proj${i}`)
+                        .to(mockupRefs.current[i - 1], { rotationY: -5, x: -40, duration: 0.6 }, `proj${i}`)
+                        .to(tickRefs.current[i - 1], { backgroundColor: "#8C8178", duration: 0.4 }, `proj${i}`)
+                        .to(panelRefs.current[i], { opacity: 1, duration: 0.6 }, `proj${i}+=0.6`)
+                        .to(mockupRefs.current[i], { rotationY: 0, x: 0, duration: 0.6 }, `proj${i}+=0.6`)
+                        .to(tickRefs.current[i], { backgroundColor: "#7A2430", duration: 0.4 }, `proj${i}+=0.6`);
+                });
 
-        const portfolio = portfolioRef.current;
-        if (portfolio) {
-            portfolio.addEventListener('wheel', handleScroll, { passive: false });
-            portfolio.addEventListener('touchstart', handleTouchStart, { passive: false });
-            portfolio.addEventListener('touchmove', handleTouchMove, { passive: false });
-            
-            return () => {
-                portfolio.removeEventListener('wheel', handleScroll);
-                portfolio.removeEventListener('touchstart', handleTouchStart);
-                portfolio.removeEventListener('touchmove', handleTouchMove);
-                if (scrollTimeout) {
-                    clearTimeout(scrollTimeout);
-                }
-            };
-        }
-    }, [currentIndex, isScrolling, images.length]);
+                const lastIndex = projects.length - 1;
+                tl.addLabel("exit-last")
+                    .to(panelRefs.current[lastIndex], { opacity: 0, duration: 0.6 }, "exit-last")
+                    .to(textRefs.current[lastIndex], { scale: 1.08, duration: 0.6 }, "exit-last")
+                    .to(mockupRefs.current[lastIndex], { rotationY: -5, x: -40, duration: 0.6 }, "exit-last")
+                    .to(tickRefs.current[lastIndex], { backgroundColor: "#8C8178", duration: 0.4 }, "exit-last");
+
+                return () => {
+                    if (tl.scrollTrigger) tl.scrollTrigger.kill();
+                    tl.kill();
+                };
+            });
+        });
+
+        return () => ctx.revert();
+    }, []);
 
     return (
-        <section ref={portfolioRef} className="hero h-screen section flex flex-col justify-center items-center overflow-hidden relative">
-            <h1 className="hero__title text-white font-saunde lg:text-8xl md:text-6xl text-6xl mb-10" data-aos="flip-up" data-aos-duration="1000">Portfolio</h1>
-            
-            <div className="w-full h-[60vh] overflow-hidden relative">
-                <div ref={imagesRef} className="flex flex-row h-full">
-                    {images.map((image, index) => (
-                        <img 
-                            key={index}
-                            src={image} 
-                            alt={imageNames[index]} 
-                            className="w-screen h-full object-contain flex-shrink-0 rounded-lg" 
-                            data-aos="fade-up" 
-                            data-aos-delay={100 * (index + 1)} 
-                        />
+        <section className="section relative">
+            <div className="reveal flex flex-row justify-between items-start section-marker text-muted px-6 md:px-12 pt-8 md:pt-10">
+                <span>Portfolio</span>
+                <span className="hidden md:block">Selected Work</span>
+            </div>
+
+            {/* Desktop: pinned, scroll-locked case studies */}
+            <div
+                ref={wrapperRef}
+                className="hidden md:block relative"
+                style={{ height: `${(projects.length + 1) * UNITS_PER_PROJECT * 100}vh` }}
+            >
+                <div ref={pinRef} className="theme-dark relative h-screen flex flex-row items-center overflow-hidden px-6 md:px-12 gap-6 bg-primary">
+                    <ParticleField color="#E3C7A0" count={220} />
+                <div className="relative flex-1 h-full" style={{ perspective: "1200px" }}>
+                    {projects.map((project, index) => (
+                        <div
+                            key={project.title}
+                            ref={(el) => (panelRefs.current[index] = el)}
+                            className="absolute inset-0 grid grid-cols-12 gap-10 items-center"
+                        >
+                            <div
+                                ref={(el) => (textRefs.current[index] = el)}
+                                className="col-span-5 flex flex-col gap-5 text-left"
+                            >
+                                <div className="flex flex-row items-center gap-3 font-raleway text-xs tracking-[0.15em] uppercase text-muted">
+                                    <span>{project.category}</span>
+                                </div>
+
+                                <h3 className="hero__title italic font-saunde text-tan text-4xl lg:text-5xl">
+                                    {project.title}
+                                </h3>
+
+                                <p className="font-raleway text-sm md:text-base text-secondary leading-relaxed max-w-md">
+                                    {project.description}
+                                </p>
+
+                                <ul className="grid grid-cols-2 gap-x-4 gap-y-2 max-w-md list-none">
+                                    {project.features.map((item) => (
+                                        <li
+                                            key={item}
+                                            className="font-raleway text-xs md:text-sm text-muted pl-4 relative before:content-['◆'] before:absolute before:left-0 before:text-[0.5rem] before:top-1 before:text-maroon"
+                                        >
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+
+                                <div className="flex flex-row flex-wrap gap-2">
+                                    {project.tech.map((tech) => (
+                                        <span
+                                            key={tech}
+                                            className="font-raleway text-[0.65rem] tracking-[0.05em] uppercase text-muted border border-stone-700 rounded-full px-3 py-1"
+                                        >
+                                            {tech}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div
+                                ref={(el) => (mockupRefs.current[index] = el)}
+                                className="col-span-7 flex items-center justify-center"
+                            >
+                                <div className="theme-dark rounded-xl overflow-hidden border border-stone-700 bg-primary w-full scale-[0.8]">
+                                    <div className="flex flex-row items-center gap-3 px-4 py-3 border-b border-stone-700">
+                                        <div className="flex flex-row gap-1.5">
+                                            <span className="w-2.5 h-2.5 rounded-full bg-[#E05B4F]" />
+                                            <span className="w-2.5 h-2.5 rounded-full bg-[#E0B84F]" />
+                                            <span className="w-2.5 h-2.5 rounded-full bg-[#4FE07A]" />
+                                        </div>
+                                    </div>
+                                    <div className="relative w-full max-h-[60vh] overflow-hidden bg-primary">
+                                        <img
+                                            src={project.image}
+                                            alt={project.title}
+                                            className="w-full h-auto block"
+                                        />
+                                        <div className="absolute inset-0 bg-black/35" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     ))}
                 </div>
+
+                    <div className="flex flex-col items-center gap-3 shrink-0">
+                        {projects.map((_, index) => (
+                            <span
+                                key={index}
+                                ref={(el) => (tickRefs.current[index] = el)}
+                                className="w-1 h-6 rounded-sm"
+                            />
+                        ))}
+                    </div>
+                </div>
             </div>
-            
-            {/* Navigation dots */}
-            <div className="flex gap-2 mt-6">
-                {images.map((_, index) => (
-                    <div 
-                        key={index}
-                        className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-                            index === currentIndex ? 'bg-secondary' : 'bg-white/30'
-                        }`}
-                    />
+
+            {/* Mobile: simple static stack, no pin/scrub */}
+            <div className="md:hidden flex flex-col gap-16 px-6 py-10">
+                {projects.map((project, index) => (
+                    <div key={project.title} className="flex flex-col gap-5 text-left">
+                        <div className="flex flex-row items-center gap-3 font-raleway text-xs tracking-[0.15em] uppercase text-muted">
+                            <span>{project.category}</span>
+                        </div>
+
+                        <h3 className="hero__title italic font-saunde text-tan text-3xl">
+                            {project.title}
+                        </h3>
+
+                        <div className="theme-dark rounded-xl overflow-hidden border border-stone-700 bg-primary">
+                            <div className="flex flex-row items-center gap-3 px-4 py-3 border-b border-stone-700">
+                                <div className="flex flex-row gap-1.5">
+                                    <span className="w-2.5 h-2.5 rounded-full bg-[#E05B4F]" />
+                                    <span className="w-2.5 h-2.5 rounded-full bg-[#E0B84F]" />
+                                    <span className="w-2.5 h-2.5 rounded-full bg-[#4FE07A]" />
+                                </div>
+                            </div>
+                            <div className="relative w-full max-h-[50vh] overflow-hidden bg-primary">
+                                <img src={project.image} alt={project.title} className="w-full h-auto block" />
+                                <div className="absolute inset-0 bg-black/35" />
+                            </div>
+                        </div>
+
+                        <p className="font-raleway text-sm text-secondary leading-relaxed">
+                            {project.description}
+                        </p>
+
+                        <ul className="grid grid-cols-2 gap-x-4 gap-y-2 list-none">
+                            {project.features.map((item) => (
+                                <li
+                                    key={item}
+                                    className="font-raleway text-xs text-muted pl-4 relative before:content-['◆'] before:absolute before:left-0 before:text-[0.5rem] before:top-1 before:text-maroon"
+                                >
+                                    {item}
+                                </li>
+                            ))}
+                        </ul>
+
+                        <div className="flex flex-row flex-wrap gap-2">
+                            {project.tech.map((tech) => (
+                                <span
+                                    key={tech}
+                                    className="font-raleway text-[0.65rem] tracking-[0.05em] uppercase text-muted border border-stone-700 rounded-full px-3 py-1"
+                                >
+                                    {tech}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
                 ))}
             </div>
         </section>
     );
-}
+};
 
 export default Portfolio;

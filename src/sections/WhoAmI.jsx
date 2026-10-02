@@ -1,36 +1,69 @@
-import ProfileLine from "../assets/images/ProfileLine.svg"
-import SideProfile from "../assets/images/FrontProfile2.png"
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ProfileLine from "../assets/images/ProfileLine.svg";
+import SideProfile from "../assets/images/FrontProfile2.png";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const WhoAmI = () => {
+  const imageWrapRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.to(imageWrapRef.current, {
+        y: -80,
+        ease: "none",
+        scrollTrigger: {
+          trigger: imageWrapRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 0.6,
+        },
+      });
+    });
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="flex flex-col justify-center align-center md:gap-4 gap-1 section">
-      <div className="grid md:grid-cols-4 grid-cols-1 items-center">
-        <div className="md:col-span-1 md:col-start-2 relative mx-auto" data-aos="fade-right" data-aos-duration="1000">
-          <div className="absolute flex flex-col items-start gap-2 left-0 -top-3 -translate-x-1/2 -translate-y-1/2 z-10">
-            <h5 className="text-white font-saunde text-xl">Since</h5>
-            <h5 className="text-white font-saunde md:text-5xl text-4xl">20<span className="text-secondary">17</span></h5>
+    <section className="section flex flex-col justify-center gap-10 md:gap-16 px-6 md:px-12 py-20">
+      <div className="reveal flex flex-row justify-between items-start section-marker text-muted">
+        <span>Bio</span>
+        <span className="hidden md:block">Since 20<span className="text-maroon">17</span></span>
+      </div>
+
+      <div className="grid md:grid-cols-12 grid-cols-1 gap-8 md:gap-4 items-start">
+        <div
+          ref={imageWrapRef}
+          className="reveal md:col-span-4 md:col-start-1 relative mx-auto md:mx-0 md:mt-16"
+        >
+          <div className="absolute left-0 md:-top-16 -top-10 -translate-x-1/4">
+            <img src={ProfileLine} alt="Profile Line" className="w-16 md:w-24 opacity-70" />
           </div>
-          <div className="absolute left-0 md:top-[300px] top-[190px] -translate-x-1/2 -translate-y-[50px]">
-            <img src={ProfileLine} alt="Profile Line"/>
-          </div>
-          <div className="md:max-h-96 max-h-60">
-            <img src={SideProfile} alt="flower" className="rounded-[20px] h-[337px] bg-gradient-to-tl from-[#1F1F1F] to-[#cdcdcd]" />
-          </div>
+          <img
+            src={SideProfile}
+            alt="Eaint Thazin Myint portrait"
+            className="rounded-[20px] h-[320px] md:h-[400px] w-full object-cover bg-gradient-to-tl from-forest to-navy"
+          />
         </div>
-        <div className="md:col-span-2 md:col-start-3 flex flex-col justify-center items-start ml-16 w-2/3 md:gap-10 gap-4 md:mt-0 mt-16" data-aos="fade-left" data-aos-duration="1000">
-          <h6 className="text-white font-saunde text-xl" data-aos="fade-up" data-aos-delay="200">Bio</h6>
-          <h6 className="text-secondary font-saunde md:text-5xl text-xl" data-aos="fade-up" data-aos-delay="400">WHO I AM</h6>
-          <h6 className="text-justify text-white font-raleway leading-loose md:block hidden" data-aos="fade-up" data-aos-delay="600">
-           I'm Eaint Thazin Myint @ May K, a frontend developer originally from Myanmar, currently based in Thailand. 
-        
-      
-            I have a passion for creating beautiful and functional web applications. With over 8 years of experience, I have honed my skills in React, JavaScript and willing to learn new technologies to stay up-to-date with the latest trends in web development.
-            <br /> <br /> I have worked on various projects, including e-commerce, fintech, telecom and telematics applications in the past years. I am currently working for a software agency supporting clients in Thailand and Japan.
-              <br /> <br />I am always looking for new challenges and opportunities to grow as a developer. In my free time, I love to play cozy games, read books, and explore new technologies. I believe that continuous learning is key to success in this ever-evolving field.
+
+        <div className="reveal md:col-span-7 md:col-start-6 flex flex-col gap-6 md:gap-10">
+          <h1 className="hero__title text-outline text-tan font-saunde leading-[0.85] lg:text-[6rem] md:text-6xl text-5xl uppercase">
+            Who I Am
+          </h1>
+          <h6 className="text-justify text-secondary font-raleway leading-loose md:block hidden max-w-xl">
+            I'm Eaint Thazin Myint @ May K, a frontend developer originally from Myanmar, currently based in Thailand.
+            <br /> <br />
+            I have a passion for creating beautiful and functional web applications. With over 9 years of experience, I have honed my skills in React, JavaScript and willing to learn new technologies to stay up-to-date with the latest trends in web development.
+            <br /> <br />
+            I have worked on various projects, including e-commerce, fintech, telecom and telematics applications in the past years. I am currently working for a software agency supporting clients in Thailand and Japan.
+            <br /> <br />
+            I am always looking for new challenges and opportunities to grow as a developer. In my free time, I love to play cozy games, read books, and explore new technologies. I believe that continuous learning is key to success in this ever-evolving field.
           </h6>
-               <h6 className="text-justify text-white font-raleway leading-loose md:hidden block" data-aos="fade-up" data-aos-delay="600">
-                I'm Eaint Thazin Myint @ May K 
-            <br /> <br /> Experienced Frontend Developer with 8 years in web development. Currently working for a software agency supporting both Japan and Thai clients. 
+          <h6 className="text-justify text-secondary font-raleway leading-loose md:hidden block">
+            I'm Eaint Thazin Myint @ May K
+            <br /> <br />
+            Experienced Frontend Developer with 9 years in web development. Currently working for a software agency supporting both Japan and Thai clients.
           </h6>
         </div>
       </div>

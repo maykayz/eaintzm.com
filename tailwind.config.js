@@ -4,8 +4,14 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
-				primary: "#1A1A1B",
-				secondary: "#E9BB19",
+				primary: "var(--color-primary)",
+				secondary: "var(--color-secondary)",
+				muted: "var(--color-muted)",
+				maroon: "var(--color-maroon)",
+				tan: "var(--color-tan)",
+				rose: "var(--color-rose)",
+				forest: "var(--color-forest)",
+				navy: "var(--color-navy)",
 			},
 			fontFamily: {
 				serif: ["serif"],

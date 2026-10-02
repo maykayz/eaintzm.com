@@ -1,93 +1,75 @@
-import {useEffect, useRef, useState} from "react";
-import {gsap} from "gsap";
-import {ScrollToPlugin} from "gsap/ScrollToPlugin";
-import AOS from "aos";
+import { useEffect } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import Hero from "./sections/Hero";
-import WhoAmI from "./sections/WhoAmI";
+import Stats from "./sections/Stats";
 import Skills from "./sections/Skills";
 import Experience from "./sections/Experience";
+import Portfolio from "./sections/Portfolio";
+import Client from "./sections/Client";
 import ContactMe from "./sections/ContactMe";
-import Header from "./components/header";
-import SideNav from "./components/sidenav";
 import SpinningCircle from "./components/spinningCircle";
+import CustomCursor from "./components/CustomCursor";
+import Footer from "./components/footer";
 import "./App.scss";
 
-import "aos/dist/aos.css"; // make sure AOS styles are imported
-
-gsap.registerPlugin(ScrollToPlugin);
+gsap.registerPlugin(ScrollTrigger);
 
 function App() {
-	const sectionsRef = useRef([]);
-	const [currentSection, setCurrentSection] = useState(0);
-	const isScrollingRef = useRef(false);
-	const scrollTimeoutRef = useRef(null);
-
 	useEffect(() => {
-		AOS.init({
-			duration: 1000,
-			once: true, // animation triggers only once
-		});
-	}, []);
+		const ctx = gsap.context(() => {
+			gsap.utils.toArray(".reveal").forEach((el) => {
+				gsap.fromTo(
+					el,
+					{ opacity: 0, y: 50 },
+					{
+						opacity: 1,
+						y: 0,
+						duration: 1,
+						ease: "power3.out",
+						scrollTrigger: {
+							trigger: el,
+							start: "top 85%",
+							toggleActions: "play none none reverse",
+						},
+					}
+				);
+			});
 
-	useEffect(() => {
-		const handleWheel = (e) => {
-			e.preventDefault(); // prevent default scroll
-
-			if (isScrollingRef.current) return;
-
-			// Trackpad can fire many small events, so ignore tiny deltas
-			if (Math.abs(e.deltaY) < 20) return;
-
-			if (e.deltaY > 0 && currentSection < sectionsRef.current.length - 1) {
-				scrollToSection(currentSection + 1);
-			} else if (e.deltaY < 0 && currentSection > 0) {
-				scrollToSection(currentSection - 1);
-			}
-		};
-
-		const scrollToSection = (index) => {
-			isScrollingRef.current = true;
-			gsap.to(window, {
-				duration: 1,
-				scrollTo: {y: sectionsRef.current[index], autoKill: false},
-				onComplete: () => {
-					isScrollingRef.current = false;
-					setCurrentSection(index);
+			gsap.to(".scroll-progress__bar", {
+				scaleX: 1,
+				ease: "none",
+				scrollTrigger: {
+					trigger: ".App",
+					start: "top top",
+					end: "bottom bottom",
+					scrub: 0.3,
 				},
 			});
-		};
+		});
 
-		window.addEventListener("wheel", handleWheel, {passive: false});
-
-		// Capture the timeout ref value to use in cleanup
-		const timeoutRef = scrollTimeoutRef.current;
-
-		return () => {
-			window.removeEventListener("wheel", handleWheel);
-			if (timeoutRef) {
-				clearTimeout(timeoutRef);
-			}
-		};
-	}, [currentSection]);
+		return () => ctx.revert();
+	}, []);
 
 	return (
-		<div className="App bg-primary">
-			<Header />
+		<div className="App bg-primary md:cursor-none">
+			<div className="scroll-progress">
+				<div className="scroll-progress__bar" />
+			</div>
 			<div className="hidden md:block">
-				<SideNav />
 				<SpinningCircle />
+				<CustomCursor />
 			</div>
 
-			{[Hero, WhoAmI, Skills, Experience, ContactMe].map((Section, index) => (
-				<div
-					key={index}
-					ref={(el) => (sectionsRef.current[index] = el)}
-					style={{height: "100vh"}}
-				>
-					<Section />
-				</div>
-			))}
+			<Hero />
+			<Stats />
+			<Skills />
+			<Experience />
+			<Portfolio />
+			<Client />
+			<ContactMe />
+			<Footer />
 		</div>
 	);
 }

@@ -2,11 +2,35 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&family=Raleway&family=Caveat:wght@500;600&display=swap');
 
 @font-face {
   font-family: 'Saunde';
   src: url('./assets/fonts/Saunde.otf') format('opentype');
+}
+
+:root {
+  --color-primary: #F7F2EA;
+  --color-secondary: #221512;
+  --color-muted: #7A6E63;
+  --color-maroon: #7A2430;
+  --color-tan: #5C3A22;
+  --color-rose: #9C4C57;
+  --color-forest: #DDE3D6;
+  --color-navy: #D7DCE8;
+  --hero-gradient: radial-gradient(circle at 50% 42%, #EFD9CE 0%, #F7F2EA 68%);
+}
+
+.theme-dark {
+  --color-primary: #170B0D;
+  --color-secondary: #EDE6DC;
+  --color-muted: #8C8178;
+  --color-maroon: #7A2430;
+  --color-tan: #E3C7A0;
+  --color-rose: #C98A93;
+  --color-forest: #232B20;
+  --color-navy: #1D2742;
+  --hero-gradient: radial-gradient(circle at 50% 42%, #4A161D 0%, #170B0D 68%);
 }
 
 .App {
@@ -28,10 +52,14 @@
   font-family: 'Raleway', sans-serif;
 }
 
+.font-signature {
+  font-family: 'Caveat', cursive;
+}
+
 #portfolio-container {
   scroll-behavior: smooth;
   scrollbar-width: thin;
-  scrollbar-color: #E9BB19 transparent;
+  scrollbar-color: var(--color-maroon) transparent;
 }
 
 #portfolio-container::-webkit-scrollbar {
@@ -43,10 +71,100 @@
 }
 
 #portfolio-container::-webkit-scrollbar-thumb {
-  background: #E9BB19;
+  background: var(--color-maroon);
   border-radius: 4px;
 }
 
 #portfolio-container::-webkit-scrollbar-thumb:hover {
-  background: #FB861B;
+  background: var(--color-muted);
+}
+
+.gravity-orbit {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+.gravity-orbit svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.gravity-orbit__node {
+  cursor: grab;
+}
+
+.gravity-orbit__node:active {
+  cursor: grabbing;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.text-outline {
+  -webkit-text-stroke: 1.5px currentColor;
+  color: transparent;
+}
+
+.section-marker {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 22s linear infinite;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(243, 237, 228, 0.08);
+  z-index: 50;
+}
+
+.scroll-progress__bar {
+  height: 100%;
+  width: 100%;
+  transform-origin: left;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, var(--color-maroon), var(--color-navy));
+}
+
+.gravity-orbit__hint {
+  position: absolute;
+  left: 50%;
+  bottom: -2rem;
+  transform: translateX(-50%);
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  white-space: nowrap;
+  pointer-events: none;
 }
