@@ -12,7 +12,7 @@ const SideNav = () => (
         </a>
       </li>
       <li>
-        <a href="mailto:ms.eaintthazinmyint@gmail.com" target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-maroon font-saunde text-center cursor-pointer transition-colors duration-300">
+        <a href="mailto:eaintzm@gmail.com" target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-maroon font-saunde text-center cursor-pointer transition-colors duration-300">
           Email
         </a>
       </li>

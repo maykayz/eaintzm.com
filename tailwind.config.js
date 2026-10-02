@@ -15,6 +15,7 @@ module.exports = {
 			},
 			fontFamily: {
 				serif: ["serif"],
+				pixel: ['"Press Start 2P"', "monospace"],
 			},
 			fontSize: {
 				"2xl": "12.5rem",

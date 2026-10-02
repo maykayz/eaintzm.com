@@ -11,11 +11,11 @@ const Footer = () => {
                     <a href="https://github.com/maykayz" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-maroon transition-colors duration-300">
                         GitHub
                     </a>
-                    <a href="mailto:ms.eaintthazinmyint@gmail.com" className="text-muted hover:text-maroon transition-colors duration-300">
+                    <a href="mailto:eaintzm@gmail.com" className="text-muted hover:text-maroon transition-colors duration-300">
                         Email
                     </a>
                 </div>
-                <p className="font-raleway text-xs text-muted">&copy; {year} Eaint Thazin Myint</p>
+                <p className="font-raleway text-xs text-muted">&copy; {year} Eaint</p>
             </div>
         </footer>
     )

@@ -44,7 +44,7 @@ const Hero = () => {
             trigger: wrapperRef.current,
             start: "top top",
             end: "bottom bottom",
-            scrub: 1,
+            scrub: 1.3,
             pin: pinRef.current,
             pinSpacing: false,
             anticipatePin: 1,

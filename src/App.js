@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -9,14 +10,14 @@ import Experience from "./sections/Experience";
 import Portfolio from "./sections/Portfolio";
 import Client from "./sections/Client";
 import ContactMe from "./sections/ContactMe";
-import SpinningCircle from "./components/spinningCircle";
 import CustomCursor from "./components/CustomCursor";
 import Footer from "./components/footer";
+import CatAssetGallery from "./pages/CatAssetGallery";
 import "./App.scss";
 
 gsap.registerPlugin(ScrollTrigger);
 
-function App() {
+function Home() {
 	useEffect(() => {
 		const ctx = gsap.context(() => {
 			gsap.utils.toArray(".reveal").forEach((el) => {
@@ -58,7 +59,6 @@ function App() {
 				<div className="scroll-progress__bar" />
 			</div>
 			<div className="hidden md:block">
-				<SpinningCircle />
 				<CustomCursor />
 			</div>
 
@@ -71,6 +71,17 @@ function App() {
 			<ContactMe />
 			<Footer />
 		</div>
+	);
+}
+
+function App() {
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/cat-assets" element={<CatAssetGallery />} />
+			</Routes>
+		</BrowserRouter>
 	);
 }
 

@@ -12,6 +12,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^5.7.0",
     "react-liquid-gauge": "^1.2.4",
+    "react-router-dom": "^7.18.4",
     "react-scripts": "5.0.1",
     "sass": "^1.69.5",
     "web-vitals": "^2.1.4"

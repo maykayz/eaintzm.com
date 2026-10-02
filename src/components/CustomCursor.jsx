@@ -19,10 +19,12 @@ const CustomCursor = ({ color = "#7A2430" }) => {
     dot.style.boxShadow = GLOW_DOT(color);
     ringEl.style.boxShadow = GLOW_RING(color);
 
+    let suppressed = false;
+
     const onMove = (e) => {
       target.current.x = e.clientX;
       target.current.y = e.clientY;
-      if (!visible.current) {
+      if (!visible.current && !suppressed) {
         visible.current = true;
         dot.style.opacity = "1";
         ringEl.style.opacity = "1";
@@ -35,8 +37,18 @@ const CustomCursor = ({ color = "#7A2430" }) => {
       ringEl.style.opacity = "0";
     };
 
+    const onSuppress = () => {
+      suppressed = true;
+      onLeave();
+    };
+    const onUnsuppress = () => {
+      suppressed = false;
+    };
+
     window.addEventListener("mousemove", onMove, { passive: true });
     document.documentElement.addEventListener("mouseleave", onLeave);
+    window.addEventListener("cursor:hide", onSuppress);
+    window.addEventListener("cursor:show", onUnsuppress);
 
     const render = () => {
       ring.current.x += (target.current.x - ring.current.x) * 0.15;
@@ -52,6 +64,8 @@ const CustomCursor = ({ color = "#7A2430" }) => {
     return () => {
       window.removeEventListener("mousemove", onMove);
       document.documentElement.removeEventListener("mouseleave", onLeave);
+      window.removeEventListener("cursor:hide", onSuppress);
+      window.removeEventListener("cursor:show", onUnsuppress);
       cancelAnimationFrame(frameId);
     };
   }, [color]);

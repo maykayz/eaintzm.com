@@ -27,7 +27,7 @@ const Client = () => {
                     5 Countries
                 </h1>
                 <p className="font-raleway text-sm text-muted">
-                    Myanmar · Thailand · Japan · Germany · Sweden
+                    Myanmar · Thailand · Japan · Germany · Norway
                 </p>
             </div>
 

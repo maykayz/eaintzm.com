@@ -107,7 +107,7 @@ const projects = [
     },
 ];
 
-const UNITS_PER_PROJECT = 2.4; // 1 unit = 100vh of scroll per project
+const UNITS_PER_PROJECT = 2.9; // 1 unit = 100vh of scroll per project
 
 const Portfolio = () => {
     const wrapperRef = useRef(null);
@@ -135,7 +135,7 @@ const Portfolio = () => {
                         trigger: wrapperRef.current,
                         start: "top top",
                         end: "bottom bottom",
-                        scrub: 0.8,
+                        scrub: 1.1,
                         pin: pinRef.current,
                         pinSpacing: false,
                         anticipatePin: 1,
