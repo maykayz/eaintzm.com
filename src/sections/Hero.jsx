@@ -44,7 +44,7 @@ const Hero = () => {
             trigger: wrapperRef.current,
             start: "top top",
             end: "bottom bottom",
-            scrub: 1,
+            scrub: 1.3,
             pin: pinRef.current,
             pinSpacing: false,
             anticipatePin: 1,
@@ -109,28 +109,27 @@ const Hero = () => {
         className="hero theme-dark h-screen section overflow-hidden relative flex flex-col justify-between py-6 px-6 md:px-12"
         style={{ background: "var(--hero-gradient)" }}
       >
-        <img ref={(el) => (floralRefs.current[0] = el)} src={FloralCorner} alt="" aria-hidden="true" className="absolute top-0 left-0 w-28 md:w-56 lg:w-80 opacity-80 mix-blend-screen pointer-events-none select-none z-0" />
-        <img ref={(el) => (floralRefs.current[1] = el)} src={FloralCorner} alt="" aria-hidden="true" className="absolute right-0 top-10 md:top-[68px] w-28 md:w-56 lg:w-80 opacity-80 mix-blend-screen pointer-events-none select-none z-0" />
-        <img ref={(el) => (floralRefs.current[2] = el)} src={FloralCorner} alt="" aria-hidden="true" className="absolute bottom-0 left-0 w-28 md:w-56 lg:w-80 opacity-80 mix-blend-screen pointer-events-none select-none z-0" />
-        <img ref={(el) => (floralRefs.current[3] = el)} src={FloralCorner} alt="" aria-hidden="true" className="absolute bottom-0 right-0 w-28 md:w-56 lg:w-80 opacity-80 mix-blend-screen pointer-events-none select-none z-0" />
+        <img ref={(el) => (floralRefs.current[0] = el)} src={FloralCorner} alt="" aria-hidden="true" className="hidden md:block absolute top-0 left-0 md:w-56 lg:w-80 opacity-80 mix-blend-screen pointer-events-none select-none z-0" />
+        <img ref={(el) => (floralRefs.current[1] = el)} src={FloralCorner} alt="" aria-hidden="true" className="hidden md:block absolute right-0 top-10 md:top-[68px] md:w-56 lg:w-80 opacity-80 mix-blend-screen pointer-events-none select-none z-0" />
+        <img ref={(el) => (floralRefs.current[2] = el)} src={FloralCorner} alt="" aria-hidden="true" className="hidden md:block absolute bottom-0 left-0 md:w-56 lg:w-80 opacity-80 mix-blend-screen pointer-events-none select-none z-0" />
+        <img ref={(el) => (floralRefs.current[3] = el)} src={FloralCorner} alt="" aria-hidden="true" className="hidden md:block absolute bottom-0 right-0 md:w-56 lg:w-80 opacity-80 mix-blend-screen pointer-events-none select-none z-0" />
 
         <div className="reveal flex flex-row justify-between items-start section-marker text-muted relative z-20">
           <span>Creative Portfolio</span>
           <span className="hidden md:block">Eaint Thazin Myint</span>
         </div>
 
-        <div className="relative flex-1 flex items-center justify-center min-h-0 translate-y-0 md:translate-y-[220px]">
+        <div className="relative flex-1 flex items-center justify-center min-h-0 translate-y-0 md:translate-y-[60px] lg:translate-y-[100px] xl:translate-y-[150px] 2xl:translate-y-[220px]">
           <span
             ref={hiRef}
-            className="absolute inset-x-0 -top-6 md:top-0 text-center text-muted font-raleway text-sm md:text-base tracking-[0.3em] uppercase select-none pointer-events-none"
+            className="hidden md:block absolute inset-x-0 top-0 text-center text-muted font-raleway text-sm md:text-base tracking-[0.3em] uppercase select-none pointer-events-none"
           >
             Hey It's me
           </span>
 
           <h1
             ref={headlineRef}
-            className="hero__title absolute inset-x-0 text-center text-tan font-saunde uppercase leading-none select-none pointer-events-none"
-            style={{ fontSize: "clamp(7rem, 30vw, 26rem)" }}
+            className="hero__title absolute inset-x-0 z-0 text-center text-tan font-saunde uppercase leading-none select-none pointer-events-none text-[7rem] md:text-[8rem] lg:text-[10rem] xl:text-[13rem] 2xl:text-[26rem]"
           >
             Eaint
           </h1>
@@ -139,16 +138,16 @@ const Hero = () => {
             ref={portraitRef}
             src={Portrait}
             alt="Eaint Thazin Myint"
-            className="relative z-10 h-[92%] md:h-[98%] w-auto object-contain object-bottom translate-x-[6%]"
+            className="relative z-10 h-[92%] md:h-[98%] w-auto object-contain object-bottom translate-x-0 md:translate-x-[6%] -translate-y-20 md:translate-y-0"
             style={{ filter: "brightness(0.68) contrast(1.05) saturate(1)" }}
           />
         </div>
 
         <div
           ref={bottomRef}
-          className="relative z-20 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 md:gap-10 shrink-0"
+          className="relative z-20 flex flex-col md:flex-row justify-between items-center md:items-end gap-6 md:gap-10 shrink-0"
         >
-          <div className="flex flex-col gap-3 max-w-xs">
+          <div className="hidden md:flex flex-col gap-3 max-w-xs">
             <p className="border-l-2 text-sm md:text-base border-maroon text-secondary text-left pl-5 font-raleway">
               Craft was never the easy part. It is letting the mind run
               alongside the machine, in search of greater creations.
@@ -156,12 +155,12 @@ const Hero = () => {
             <span className="font-signature text-rose text-3xl pl-5 -mt-1">Eaint Thazin Myint</span>
           </div>
 
-          <div className="flex flex-col gap-3 max-w-xs md:items-end md:text-right">
+          <div className="flex flex-col gap-3 max-w-xs items-center text-center md:items-end md:text-right">
             <p className="text-secondary font-raleway text-sm md:text-base">
               I'm a Frontend Developer crafting elegant, performant and
               user-centered web experiences.
             </p>
-            <div className="flex flex-row items-center gap-3">
+            <div className="hidden md:flex flex-row items-center gap-3">
               <div className="flex flex-col md:items-end">
                 <h5 className="text-muted font-raleway text-xs tracking-[0.2em] uppercase">Based In Thailand</h5>
                 <h5 className="text-muted font-raleway text-xs tracking-[0.2em] uppercase">Working Worldwide</h5>

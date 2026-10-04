@@ -1,9 +1,19 @@
-const OutlineButton = ({ children, ...props }) => (
-    <button className="flex items-center btn btn-outline-primary text-secondary font-saunde border border-secondary px-8 py-2 rounded-full
-        hover:bg-maroon hover:text-secondary hover:border-maroon transition-colors duration-300
-    " {...props}>
+import StarBorder from "../StarBorder";
+
+const OutlineButton = ({ children, className = "", ...props }) => (
+    <StarBorder
+        as="button"
+        color="#C98A93"
+        speed="4s"
+        thickness={1}
+        backgroundColor="var(--color-primary)"
+        textColor="var(--color-secondary)"
+        borderColor="var(--color-maroon)"
+        className={`font-saunde text-sm ${className}`}
+        {...props}
+    >
         {children}
-    </button>
+    </StarBorder>
 )
 
 export default OutlineButton

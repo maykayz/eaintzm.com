@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -7,16 +8,13 @@ import Stats from "./sections/Stats";
 import Skills from "./sections/Skills";
 import Experience from "./sections/Experience";
 import Portfolio from "./sections/Portfolio";
-import Client from "./sections/Client";
 import ContactMe from "./sections/ContactMe";
-import SpinningCircle from "./components/spinningCircle";
-import CustomCursor from "./components/CustomCursor";
-import Footer from "./components/footer";
+import SplashCursor from "./components/SplashCursor";
 import "./App.scss";
 
 gsap.registerPlugin(ScrollTrigger);
 
-function App() {
+function Home() {
 	useEffect(() => {
 		const ctx = gsap.context(() => {
 			gsap.utils.toArray(".reveal").forEach((el) => {
@@ -30,7 +28,7 @@ function App() {
 						ease: "power3.out",
 						scrollTrigger: {
 							trigger: el,
-							start: "top 85%",
+							start: "top 95%",
 							toggleActions: "play none none reverse",
 						},
 					}
@@ -49,7 +47,15 @@ function App() {
 			});
 		});
 
-		return () => ctx.revert();
+		const refresh = () => ScrollTrigger.refresh();
+		window.addEventListener("load", refresh);
+		const timeoutId = setTimeout(refresh, 500);
+
+		return () => {
+			ctx.revert();
+			window.removeEventListener("load", refresh);
+			clearTimeout(timeoutId);
+		};
 	}, []);
 
 	return (
@@ -58,8 +64,18 @@ function App() {
 				<div className="scroll-progress__bar" />
 			</div>
 			<div className="hidden md:block">
-				<SpinningCircle />
-				<CustomCursor />
+				<SplashCursor
+					DENSITY_DISSIPATION={3.5}
+					VELOCITY_DISSIPATION={2}
+					PRESSURE={0.1}
+					CURL={3}
+					SPLAT_RADIUS={0.2}
+					SPLAT_FORCE={6000}
+					COLOR_UPDATE_SPEED={10}
+					SHADING
+					RAINBOW_MODE={false}
+					COLOR="#7A2430"
+				/>
 			</div>
 
 			<Hero />
@@ -67,10 +83,18 @@ function App() {
 			<Skills />
 			<Experience />
 			<Portfolio />
-			<Client />
 			<ContactMe />
-			<Footer />
 		</div>
+	);
+}
+
+function App() {
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<Home />} />
+			</Routes>
+		</BrowserRouter>
 	);
 }
 

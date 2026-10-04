@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "react";
+import { useMemo } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import {
     SiReact,
     SiNextdotjs,
@@ -21,12 +22,28 @@ import {
     SiMatomo,
     SiGooglesearchconsole,
     SiSentry,
+    SiHtml5,
+    SiCss,
+    SiSass,
+    SiShadcnui,
+    SiJquery,
+    SiWebpack,
+    SiNpm,
+    SiExpress,
+    SiSwagger,
+    SiJsonwebtokens,
+    SiJest,
+    SiCloudflare,
 } from "react-icons/si";
-import { FiCloud, FiLayers, FiSearch, FiCpu, FiEye } from "react-icons/fi";
+import { FiLayers, FiSearch, FiEye, FiShare2, FiCpu } from "react-icons/fi";
 import { MdAccessibility } from "react-icons/md";
-import { FaCookieBite } from "react-icons/fa6";
+import { FaCookieBite, FaAws } from "react-icons/fa6";
+import { BsOpenai } from "react-icons/bs";
+import { TbBrandAzure } from "react-icons/tb";
+import { VscAzureDevops } from "react-icons/vsc";
 import { skillCategories } from "../data/skills";
-import { getLightsOn, subscribeLights, toggleLights } from "../utils/lightBus";
+import DomeGallery from "../components/DomeGallery";
+import Aurora from "../components/Aurora";
 
 const ICONS = {
     "React": SiReact,
@@ -36,21 +53,36 @@ const ICONS = {
     "TypeScript": SiTypescript,
     "JavaScript": SiJavascript,
     "Vue": SiVuedotjs,
+    "HTML": SiHtml5,
+    "CSS": SiCss,
+    "SCSS": SiSass,
     "Tailwind CSS": SiTailwindcss,
     "Material UI": SiMui,
+    "shadcn/ui": SiShadcnui,
+    "jQuery": SiJquery,
+    "Webpack": SiWebpack,
+    "npm": SiNpm,
     "GSAP": SiGreensock,
     "AOS": FiLayers,
     "Scroll-driven UI": FiLayers,
     "Node.js": SiNodedotjs,
     "NestJS": SiNestjs,
+    "Express.js": SiExpress,
     "Prisma": SiPrisma,
     "MySQL": SiMysql,
     "Docker": SiDocker,
-    "Azure": FiCloud,
+    "Azure": TbBrandAzure,
+    "AWS": FaAws,
+    "Cloudflare": SiCloudflare,
+    "REST API": FiShare2,
+    "Swagger": SiSwagger,
+    "JWT / OAuth": SiJsonwebtokens,
+    "Jest": SiJest,
     "Claude Code": SiAnthropic,
     "Claude Design": SiAnthropic,
-    "ADO AI": FiCpu,
+    "ADO AI": VscAzureDevops,
     "GitHub Copilot": SiGithubcopilot,
+    "OpenAI API": BsOpenai,
     "Google Analytics": SiGoogleanalytics,
     "Matomo": SiMatomo,
     "Google Search Console": SiGooglesearchconsole,
@@ -70,18 +102,33 @@ const BRAND_COLORS = {
     "TypeScript": "#3178C6",
     "JavaScript": "#D7B500",
     "Vue": "#42B883",
+    "HTML": "#E34F26",
+    "CSS": "#1572B6",
+    "SCSS": "#CF649A",
     "Tailwind CSS": "#38BDF8",
     "Material UI": "#007FFF",
+    "shadcn/ui": "#8C8178",
+    "jQuery": "#0769AD",
+    "Webpack": "#8DD6F9",
+    "npm": "#CB3837",
     "Node.js": "#5FA04E",
     "NestJS": "#E0234E",
+    "Express.js": "#8C8178",
     "Prisma": "#5A4FCF",
     "MySQL": "#4479A1",
     "Docker": "#2496ED",
     "Azure": "#0078D4",
+    "AWS": "#FF9900",
+    "Cloudflare": "#F38020",
+    "REST API": "#9C4C57",
+    "Swagger": "#85EA2D",
+    "JWT / OAuth": "#D63AFF",
+    "Jest": "#C21325",
     "Claude Code": "#D97757",
     "Claude Design": "#D97757",
     "ADO AI": "#0078D7",
     "GitHub Copilot": "#8957E5",
+    "OpenAI API": "#10A37F",
     "Google Analytics": "#E37400",
     "Google Tag Manager": "#246FDB",
     "Matomo": "#3152A0",
@@ -93,183 +140,96 @@ const BRAND_COLORS = {
     "Sentry": "#362D59",
 };
 
-const MAX_TILT = 14;
-const TILT_EASE = 0.08;
 
-const SkillCard = ({ skill }) => {
+const ALL_SKILLS = skillCategories.flatMap((c) => c.skills);
+
+const MOBILE_SKILLS = [
+    "React", "Next.js", "Vue", "TypeScript", "JavaScript", "Tailwind CSS",
+    "Node.js", "MySQL", "Docker", "AWS", "Azure",
+    "Google Analytics", "Jest", "Claude Code", "GitHub Copilot", "Sentry",
+];
+
+const escapeXml = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+const skillToDataUri = (skill) => {
     const Icon = ICONS[skill] || FiCpu;
     const color = BRAND_COLORS[skill] || "#C98A93";
-    const cardRef = useRef(null);
-    const tiltState = useRef({ rx: 0, ry: 0 });
-    const mousePos = useRef({ x: null, y: null });
+    const iconMarkup = renderToStaticMarkup(<Icon color={color} size={56} />);
+    const label = skill.length > 16 ? `${skill.slice(0, 15)}…` : skill;
 
-    useEffect(() => {
-        if (window.matchMedia("(pointer: coarse)").matches) return undefined;
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="220" height="220" viewBox="0 0 220 220">
+        <rect width="220" height="220" fill="#15161A"/>
+        <circle cx="110" cy="88" r="40" fill="${color}26"/>
+        <g transform="translate(82,60)">${iconMarkup}</g>
+        <text x="110" y="162" font-family="Raleway, sans-serif" font-size="16" fill="#EDE6DC" text-anchor="middle">${escapeXml(label)}</text>
+    </svg>`;
 
-        const handleMove = (e) => {
-            mousePos.current.x = e.clientX;
-            mousePos.current.y = e.clientY;
-        };
-        window.addEventListener("mousemove", handleMove, { passive: true });
-
-        let rafId;
-        const tick = () => {
-            const card = cardRef.current;
-            if (card && mousePos.current.x !== null) {
-                const rect = card.getBoundingClientRect();
-                const cx = rect.left + rect.width / 2;
-                const cy = rect.top + rect.height / 2;
-                const dx = mousePos.current.x - cx;
-                const dy = mousePos.current.y - cy;
-                const dist = Math.hypot(dx, dy) || 1;
-                const nx = dx / dist;
-                const ny = dy / dist;
-                const targetRy = nx * MAX_TILT;
-                const targetRx = -ny * MAX_TILT;
-                tiltState.current.rx += (targetRx - tiltState.current.rx) * TILT_EASE;
-                tiltState.current.ry += (targetRy - tiltState.current.ry) * TILT_EASE;
-                card.style.transform = `perspective(700px) rotateX(${tiltState.current.rx}deg) rotateY(${tiltState.current.ry}deg)`;
-            }
-            rafId = requestAnimationFrame(tick);
-        };
-        rafId = requestAnimationFrame(tick);
-
-        return () => {
-            window.removeEventListener("mousemove", handleMove);
-            cancelAnimationFrame(rafId);
-        };
-    }, []);
-
-    return (
-        <div
-            ref={cardRef}
-            style={{
-                "--accent": color,
-                transformStyle: "preserve-3d",
-            }}
-            className="group relative h-14 md:h-16 flex flex-col items-center justify-center gap-1 px-2 transition-transform duration-200 ease-out will-change-transform"
-        >
-            <div
-                className="relative flex items-center justify-center w-6 h-6 rounded-full shrink-0 transition-transform duration-200 group-hover:scale-110"
-                style={{
-                    transform: "translateZ(16px)",
-                    backgroundColor: `${color}26`,
-                    boxShadow: `0 4px 12px -5px ${color}66`,
-                }}
-            >
-                <Icon style={{ color }} size={13} />
-            </div>
-            <span
-                className="relative font-raleway text-[0.55rem] md:text-[0.65rem] uppercase tracking-[0.03em] text-[#EDE6DC] text-center leading-tight line-clamp-2"
-                style={{ transform: "translateZ(8px)" }}
-            >
-                {skill}
-            </span>
-        </div>
-    );
+    return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 };
 
 const Skills = () => {
-    const sectionRef = useRef(null);
-    const onOverlayRef = useRef(null);
-    const offOverlayRef = useRef(null);
-
-    useEffect(() => {
-        const mouse = { x: null, y: null };
-
-        const applyLightState = (on) => {
-            if (onOverlayRef.current) onOverlayRef.current.style.opacity = on ? "1" : "0";
-            if (offOverlayRef.current) offOverlayRef.current.style.opacity = on ? "0" : "1";
-        };
-        applyLightState(getLightsOn());
-        const unsubscribe = subscribeLights(applyLightState);
-
-        const handleMove = (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        };
-        window.addEventListener("mousemove", handleMove, { passive: true });
-
-        let rafId;
-        const tick = () => {
-            const el = sectionRef.current;
-            const overlay = offOverlayRef.current;
-            if (el && overlay && mouse.x !== null) {
-                const rect = el.getBoundingClientRect();
-                const x = mouse.x - rect.left;
-                const y = mouse.y - rect.top;
-                overlay.style.background = `radial-gradient(260px circle at ${x}px ${y}px, transparent 0%, rgba(6,3,3,0.96) 65%)`;
-            }
-            rafId = requestAnimationFrame(tick);
-        };
-        rafId = requestAnimationFrame(tick);
-
-        return () => {
-            window.removeEventListener("mousemove", handleMove);
-            cancelAnimationFrame(rafId);
-            unsubscribe();
-        };
-    }, []);
+    const images = useMemo(
+        () => ALL_SKILLS.map((skill) => ({ src: skillToDataUri(skill), alt: skill })),
+        []
+    );
 
     return (
         <section
-            ref={sectionRef}
-            className="theme-dark section relative"
-            style={{ background: "var(--hero-gradient)" }}
-            onClick={toggleLights}
+            className="theme-dark relative px-6 md:px-12 py-10 md:py-6 md:h-screen overflow-hidden flex flex-col justify-center"
+            style={{ backgroundColor: "#0B0B0C" }}
         >
-            <div className="reveal relative z-10 flex flex-row justify-between items-start section-marker text-muted px-6 md:px-12 pt-8 md:pt-10">
-                <span>Skills</span>
+            <div className="hidden md:block absolute inset-0 z-0 pointer-events-none">
+                <Aurora
+                    colorStops={["#3A1116", "#7A2430", "#C98A93"]}
+                    blend={0.5}
+                    amplitude={1.0}
+                    speed={0.5}
+                />
+            </div>
+
+            <div className="reveal relative md:absolute top-0 md:top-8 left-0 md:left-12 right-0 md:right-12 z-10 flex flex-row justify-between items-start section-marker text-muted">
+                <span>Tech & Tools</span>
                 <span className="hidden md:block">Area of Expertise</span>
             </div>
 
-            <div className="relative z-10 flex flex-col items-center gap-4 text-center px-6 py-10 md:py-14">
+            <div className="reveal relative z-10 flex flex-col items-center gap-2 max-w-2xl mx-auto text-center shrink-0 mt-6 md:mt-0">
                 <h1 className="hero__title text-tan font-saunde uppercase leading-none text-4xl md:text-5xl lg:text-6xl">
-                    Skills
+                    Tech & Tools
                 </h1>
-                <p className="font-raleway text-sm text-muted max-w-lg">
-                    Frontend-first engineer who builds across the stack, from pixel-perfect UI to AI-assisted backend tooling.
-                </p>
             </div>
 
-            <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-x-12 md:gap-y-10 px-6 md:px-12 pb-20 max-w-6xl mx-auto">
-                {skillCategories.map((category) => (
-                    <div key={category.title} className="flex flex-col gap-4">
-                        <div className="flex flex-col gap-3 text-left">
-                            <h3 className="hero__title text-secondary font-saunde uppercase text-base lg:text-lg">
-                                {category.title}
-                            </h3>
-                            <div className="border-b border-stone-700 w-full" />
-                        </div>
-                        <div className="grid grid-cols-3 gap-3 md:gap-4">
-                            {category.skills.map((skill) => (
-                                <SkillCard key={skill} skill={skill} />
-                            ))}
-                        </div>
-                    </div>
-                ))}
+            <div className="hidden md:block reveal relative z-10 mt-4 md:mt-6" style={{ height: "500px" }}>
+                <DomeGallery
+                    images={images}
+                    fit={0.35}
+                    minRadius={220}
+                    padFactor={0.1}
+                    grayscale={false}
+                    overlayBlurColor="transparent"
+                    imageBorderRadius="20px"
+                    openedImageBorderRadius="20px"
+                    openedImageWidth="260px"
+                    openedImageHeight="260px"
+                    segments={ALL_SKILLS.length <= 16 ? 16 : 30}
+                    autoRotateSpeed={4}
+                />
             </div>
 
-            <div
-                ref={onOverlayRef}
-                className="absolute inset-0 z-0 pointer-events-none transition-opacity duration-700 ease-out"
-                style={{
-                    opacity: 0,
-                    background: "radial-gradient(circle at 50% 42%, rgba(74,22,29,0.85) 0%, rgba(74,22,29,0.25) 70%, rgba(74,22,29,0) 100%)",
-                }}
-            />
-
-            <div
-                ref={offOverlayRef}
-                className="absolute inset-0 z-20 pointer-events-none transition-opacity duration-700 ease-out"
-                style={{ opacity: 0 }}
-            />
-
-            <p
-                className="relative z-30 text-center font-raleway text-xs tracking-[0.2em] uppercase text-[#EDE6DC] animate-pulse pb-10"
-            >
-                Try moving your cursor around, or click to turn the light on / off
-            </p>
+            <div className="md:hidden reveal relative z-10 flex flex-wrap justify-center gap-2 mt-8">
+                {MOBILE_SKILLS.map((skill) => {
+                    const Icon = ICONS[skill] || FiCpu;
+                    const color = BRAND_COLORS[skill] || "#C98A93";
+                    return (
+                        <span
+                            key={skill}
+                            className="flex items-center gap-2 font-raleway text-xs text-[#EDE6DC] bg-white/5 border border-white/10 rounded-full px-3 py-1.5"
+                        >
+                            <Icon color={color} size={14} />
+                            {skill}
+                        </span>
+                    );
+                })}
+            </div>
         </section>
     );
 };

@@ -1,6 +1,5 @@
-import { useLayoutEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import CardSwap, { Card } from '../components/CardSwap';
+import Carousel from '../components/Carousel';
 import DbotLogo from '../assets/images/logos/dbot.png';
 import DatawowLogo from '../assets/images/logos/datawow.svg';
 import DrvrLogo from '../assets/images/logos/drvr.png';
@@ -8,314 +7,178 @@ import AgdBankLogo from '../assets/images/logos/agdbank.svg';
 import Rgo47Logo from '../assets/images/logos/rgo47.webp';
 import CreativeLogo from '../assets/images/logos/creative.png';
 
-gsap.registerPlugin(ScrollTrigger);
-
 const jobList = [
     {
         company: "Dbot",
         logo: DbotLogo,
         position: "Software Engineer",
         duration: "November 2026 - Present",
-        country: "Thailand",
-        summary: "Building a Funeral ERP system and Memorial Page for Rapid Data GmbH, from day-to-day funeral operations to AI-driven development.",
-        highlights: [
-            "Built the Funeral ERP system covering the full funeral process, from picking up the deceased to ceremonies, cremation and urns, integrated with Sweden's death notice and permit system via DGM.",
-            "Developed the Memorial Page entirely through AI-driven development with Claude, ADO AI and GitHub Copilot, where families and friends share photos and memories of the deceased.",
-            "Built a widget package letting funeral houses customize and white-label their own Memorial Page theme, with Matomo analytics tracking at the company level."
-        ],
-        techStack: ["Next.js", "TypeScript", "Jest", "Playwright", "Storybook", "C#.NET", "PostgreSQL", "Azure", "Docker", "Azure ADO AI", "GitHub Copilot", "Claude Design", "Claude Code", "Matomo", "CookieYes", "Accessibility (a11y)", "i18n"]
+        durationNumber: "2026 - Present",
+        year: "2026",
+        summary: "Building a Funeral ERP system and Memorial Page for Rapid Data GmbH, from day-to-day funeral operations to AI-driven development, following accessibility and EU standards, with Matomo for tracking.",
+        techStack: ["Next.js", "TypeScript", "C#.NET", "PostgreSQL", "Azure", "Claude Code", "Matomo"]
     },
     {
         company: "Datawow",
         logo: DatawowLogo,
-        position: "Software Engineer (Frontend)",
+        position: "Frontend Developer",
         duration: "April 2024 - October 2025",
-        country: "Thailand",
-        summary: "Supported Japanese and internal Datawow projects as a frontend developer, with a focus on analytics and SEO tooling.",
-        highlights: [
-            "Supported Dopa JP, a Japanese client, on their gacha website.",
-            "Worked across internal projects including CookieWow and LearnPDPA, plus the BAM and disaster system projects.",
-            "Set up internal products with Google Tag Manager and Google Analytics, supporting SEO and Google Search Console."
-        ],
-        techStack: ["React", "Next.js", "TypeScript", "Storybook", "Jest", "Google Analytics", "Google Tag Manager", "Google Search Console", "SEO"]
+        durationNumber: "2024 - 2025",
+        year: "2024",
+        summary: "Developed and maintained front-end web applications with Next.js, from reproducing issues and fixing bugs to integrating Google Analytics and Google Tag Manager for behavior tracking, and upheld code quality through reviews and testing.",
+        techStack: ["Next.js", "React", "TypeScript", "Google Analytics", "Google Tag Manager", "Sentry", "Microsoft Clarity"]
     },
     {
         company: "DRVR",
         logo: DrvrLogo,
-        position: "Senior Software Engineer (Full-Stack & UI/UX)",
+        position: "Software Engineer, Frontend and UI/UX",
         duration: "July 2022 - April 2024",
-        country: "Thailand",
-        summary: "Built a fleet management system with real-time vehicle tracking, and designed the UI/UX across the DriveSafe portal and web products.",
-        highlights: [
-            "Developed real-time vehicle tracking over WebSocket, showing active hours, stops, driving status and tire pressure.",
-            "Built the DriveSafe portal supporting a client, Nagase Thailand, alongside our own DriveSafe product.",
-            "Maintained the DRVR website on WordPress, and designed UI/UX for the application and web portals, working closely with the CEO and PM."
-        ],
-        techStack: ["React", "WebSocket", "WordPress", "Figma"]
+        durationNumber: "2022 - 2024",
+        year: "2022",
+        summary: "Built and maintained internal platforms for tracking and analyzing driving behavior using React.js and MUI, integrating Mapbox and HERE Maps for real-time tracking, data-centric dashboards, and customizable reports. Designed the UI/UX across products and mentored junior developers.",
+        techStack: ["React.js", "MUI", "Mapbox", "HERE Maps", "WordPress"]
     },
     {
         company: "AGDBank",
         logo: AgdBankLogo,
-        position: "Software Engineer",
+        position: "React Developer",
         duration: "July 2021 - July 2022",
-        country: "Myanmar"
+        durationNumber: "2021 - 2022",
+        year: "2021",
+        summary: "Engineered and maintained the web-based wallet management portal with React.js, and played a key role building the Business Wallet App with React Native. Identified and fixed bugs, and contributed to requirements and feature discussions through Agile practices.",
+        techStack: ["React", "React Native", "Agile"]
     },
     {
         company: "rgo47",
         logo: Rgo47Logo,
-        position: "Senior Software Engineer",
+        position: "Senior Frontend Developer",
         duration: "October 2019 - May 2021",
-        country: "Myanmar"
+        durationNumber: "2019 - 2021",
+        year: "2019",
+        summary: "Designed UI/UX and built frontend for Seller Center, Sale Manager portal, ERP system, and delivery portal using Vue.js and Vuex. Built an internal UI component library and an npm package for shared micro-service components.",
+        techStack: ["Vue.js", "Nuxt.js", "Vuex", "Webpack"]
     },
     {
         company: "CREATiVE",
         logo: CreativeLogo,
-        position: "Senior Software Engineer (UI/UX)",
+        position: "Senior Frontend Developer",
         duration: "March 2017 - October 2019",
-        country: "Myanmar"
+        durationNumber: "2017 - 2019",
+        summary: "Turned design mockups into production websites for clients including Telenor Myanmar, Pizza Hut Myanmar, and Mango Media. Built a CSS theme library and jQuery plugins, developed the Telenor Myanmar website along with its MyAccount and SIM Registration portals, and tracked user behavior with Google Tag Manager and Google Analytics.",
+        techStack: ["jQuery", "CSS", "Google Tag Manager", "Google Analytics"],
+        year: "2017"
     }
 ];
 
-const UNITS_PER_JOB = 0.6; // 1 unit = 100vh of scroll per job item
+const JobCardContent = ({ job, index }) => (
+    <div
+        className="relative h-full w-full flex flex-col"
+        style={{ backgroundColor: "#2A0F13" }}
+    >
+        <div className="shrink-0 w-full flex items-center gap-3 px-4" style={{ backgroundColor: "#F8F2EA", height: "40px" }}>
+            <span className="font-raleway text-[10px] md:text-xs tracking-[0.2em] text-[#2A0F13] select-none text-left">
+                {String(index).padStart(2, "0")}
+            </span>
+            <span className="font-raleway text-xs font-bold tracking-[0.15em] uppercase text-[#6B2A33]">
+                {job.company} ({job.durationNumber})
+            </span>
+        </div>
 
-const Experience = () => {
-    const wrapperRef = useRef(null);
-    const pinRef = useRef(null);
-    const positionRefs = useRef([]);
-    const dotRefs = useRef([]);
-    const extraRefs = useRef([]);
+        <div className="flex flex-col flex-1 p-6 md:p-7 pt-4">
 
-    useLayoutEffect(() => {
-        const ctx = gsap.context(() => {
-            const mm = gsap.matchMedia();
+        <p className="font-raleway text-[#F7F2EA] text-sm md:text-base leading-snug flex-1 flex items-center mt-2 line-clamp-3 overflow-hidden">
+            {job.summary || `${job.position} at ${job.company}, ${job.duration}.`}
+        </p>
 
-            mm.add("(min-width: 768px)", () => {
-                const naturalHeights = extraRefs.current.map((el) => (el ? el.scrollHeight : 0));
+        {job.techStack?.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mb-2 pt-4">
+                {job.techStack.map((tech) => (
+                    <span
+                        key={tech}
+                        className="font-raleway text-[10px] md:text-xs text-[#2A0F13] bg-[#F8F2EA] rounded-full px-2 py-0.5"
+                    >
+                        {tech}
+                    </span>
+                ))}
+            </div>
+        )}
 
-                gsap.set(extraRefs.current, { height: 0, opacity: 0 });
-                gsap.set(extraRefs.current[0], { height: naturalHeights[0], opacity: 1 });
-                gsap.set(positionRefs.current, { color: "#8C8178" });
-                gsap.set(positionRefs.current[0], { color: "#7A2430" });
-                gsap.set(dotRefs.current, { backgroundColor: "#8C8178" });
-                gsap.set(dotRefs.current[0], { backgroundColor: "#7A2430" });
+        <div className="flex items-center justify-between gap-3 pt-2 border-t border-[#4A2126] shrink-0">
+            <div className="flex flex-col gap-0.5 text-left">
+                <span className="font-raleway font-semibold text-sm md:text-base text-[#F7F2EA] text-left">{job.position}</span>
+                <span className="font-raleway text-xs md:text-sm text-[#B9A9A4] text-left">{job.duration}</span>
+            </div>
+            {job.logo && (
+                <span className="w-10 h-10 rounded bg-white flex items-center justify-center overflow-hidden shrink-0">
+                    <img src={job.logo} alt={`${job.company} logo`} className="w-full h-full object-contain p-1" />
+                </span>
+            )}
+        </div>
+        </div>
+    </div>
+);
 
-                const tl = gsap.timeline({
-                    scrollTrigger: {
-                        trigger: wrapperRef.current,
-                        start: "top top",
-                        end: "bottom bottom",
-                        scrub: 0.3,
-                        pin: pinRef.current,
-                        pinSpacing: false,
-                        anticipatePin: 1,
-                    },
-                });
-
-                jobList.forEach((_, i) => {
-                    if (i === 0) return;
-
-                    tl.addLabel(`job${i}`)
-                        .to(extraRefs.current[i - 1], { height: 0, opacity: 0, duration: 0.3, ease: "power2.inOut" }, `job${i}`)
-                        .to(positionRefs.current[i - 1], { color: "#8C8178", duration: 0.2 }, `job${i}`)
-                        .to(dotRefs.current[i - 1], { backgroundColor: "#8C8178", duration: 0.2 }, `job${i}`)
-                        .to(extraRefs.current[i], { height: naturalHeights[i], opacity: 1, duration: 0.3, ease: "power2.inOut" }, `job${i}+=0.3`)
-                        .to(positionRefs.current[i], { color: "#7A2430", duration: 0.2 }, `job${i}+=0.3`)
-                        .to(dotRefs.current[i], { backgroundColor: "#7A2430", duration: 0.2 }, `job${i}+=0.3`);
-                });
-
-                return () => {
-                    if (tl.scrollTrigger) tl.scrollTrigger.kill();
-                    tl.kill();
-                };
-            });
-        });
-
-        return () => ctx.revert();
-    }, []);
-
-    return (
-    <section className="section relative">
-        <div className="reveal flex flex-row justify-between items-start section-marker text-muted px-6 md:px-12 pt-8 md:pt-10">
+const Experience = () => (
+    <section className="md:h-screen bg-grain relative px-6 md:px-12 py-10 md:py-5 overflow-hidden flex flex-col">
+      <div className="relative w-full h-full flex flex-col">
+        <div className="reveal relative z-10 flex flex-row justify-between items-start section-marker text-muted shrink-0">
             <span>Experience</span>
             <span className="hidden md:block">9 Years</span>
         </div>
 
-        {/* Desktop: pinned, scroll-locked sequence */}
-        <div
-            ref={wrapperRef}
-            className="hidden md:block relative"
-            style={{ height: `${jobList.length * UNITS_PER_JOB * 100}vh` }}
-        >
-            <div ref={pinRef} className="h-screen grid grid-cols-12 overflow-hidden">
-                <div className="col-span-5 flex flex-col justify-between px-12 py-16 h-full">
-                    <h1 className="hero__title text-outline text-tan font-saunde leading-[0.85] lg:text-[4.5rem] md:text-5xl text-4xl uppercase">
-                        Professional
-                    </h1>
-                    <h1 className="hero__title text-maroon font-saunde leading-[0.85] lg:text-[4.5rem] md:text-5xl text-4xl uppercase -mt-4 md:-mt-8">
-                        Experience
-                    </h1>
-                    <p className="text-secondary font-raleway leading-loose max-w-sm">
-                        Experienced Software Engineer with 9 years in web development, frontend-focused and design-focused, with growing full-stack range. Strong experience in e-commerce, fintech, and telecom sectors. Currently working as a Software Engineer supporting clients across the DACH region as an outsourced developer, building a Funeral ERP system and Memorial websites.
-                    </p>
-                </div>
+        {/* Desktop: card stack */}
+        <div className="hidden md:flex relative z-10 flex-1 flex-col items-center justify-center min-h-0 gap-40">
+            <div className="reveal relative flex flex-col items-center gap-2 max-w-2xl mx-auto text-center shrink-0">
+                <h1 className="hero__title text-maroon font-saunde leading-[0.85] text-3xl md:text-4xl lg:text-5xl uppercase">
+                    Experience
+                </h1>
+                <p className="text-secondary font-raleway leading-snug text-xs md:text-sm">
+                    Software Engineer with 9 years across frontend, design, and growing full-stack work.
+                </p>
+            </div>
 
-                <div className="col-span-6 col-start-7 h-full overflow-hidden relative border-l border-stone-800 px-12 flex flex-col justify-center">
-                    {jobList.map((job, index) => (
-                        <div key={job.company} className="border-b border-stone-800">
-                            <div className="w-full flex flex-row justify-between items-center py-6">
-                                <div className="flex flex-col gap-1">
-                                    <div className="flex flex-row items-center gap-3">
-                                        {job.logo && (
-                                            <span className="w-9 h-9 rounded-lg bg-white flex items-center justify-center overflow-hidden shrink-0">
-                                                <img src={job.logo} alt={`${job.company} logo`} className="w-full h-full object-contain p-1" />
-                                            </span>
-                                        )}
-                                        <h3 className="hero__title text-secondary font-saunde lg:text-4xl md:text-2xl text-xl uppercase">
-                                            {job.company}
-                                        </h3>
-                                        <span className="text-muted font-raleway text-xs tracking-[0.1em] uppercase">
-                                            {job.country}
-                                        </span>
-                                    </div>
-                                    <div className="flex flex-row items-baseline gap-2">
-                                        <span
-                                            ref={(el) => (positionRefs.current[index] = el)}
-                                            className="font-raleway text-base"
-                                        >
-                                            {job.position}
-                                        </span>
-                                        <span className="text-muted font-raleway text-xs shrink-0">
-                                            {job.duration}
-                                        </span>
-                                    </div>
-                                </div>
-                                <span
-                                    ref={(el) => (dotRefs.current[index] = el)}
-                                    className="w-2.5 h-2.5 rounded-full shrink-0 ml-4"
-                                />
-                            </div>
-                            <div
-                                ref={(el) => (extraRefs.current[index] = el)}
-                                className="overflow-hidden"
-                                style={{ height: 0, opacity: 0 }}
-                            >
-                                <div className="flex flex-col gap-3 pb-6">
-                                    {job.summary && (
-                                        <p className="text-secondary font-raleway text-sm md:text-base leading-relaxed max-w-md text-left">
-                                            {job.summary}
-                                        </p>
-                                    )}
-                                    {job.highlights && (
-                                        <ul className="flex flex-col gap-1.5 text-left max-w-md list-none">
-                                            {job.highlights.map((item) => (
-                                                <li
-                                                    key={item}
-                                                    className="text-muted font-raleway text-sm md:text-base leading-relaxed pl-4 relative before:content-['•'] before:absolute before:left-0 before:text-maroon"
-                                                >
-                                                    {item}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    )}
-                                    {job.techStack && (
-                                        <div className="flex flex-row flex-wrap justify-start gap-2 text-left">
-                                            {job.techStack.map((tech) => (
-                                                <span
-                                                    key={tech}
-                                                    className="font-raleway text-[0.65rem] tracking-[0.05em] uppercase text-muted border border-stone-700 rounded-full px-3 py-1"
-                                                >
-                                                    {tech}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
+            <div className="reveal relative mx-auto w-full shrink-0" style={{ height: "520px", maxWidth: "720px", transform: "translateX(-100px)" }}>
+                <CardSwap
+                    width={460}
+                    height={380}
+                    cardDistance={55}
+                    verticalDistance={60}
+                    delay={0}
+                    pauseOnHover
+                    easing="elastic"
+                    skewAmount={0}
+                >
+                    {jobList.map((job, i) => (
+                        <Card key={job.company} style={{ borderRadius: 14, border: "1px solid rgba(237,230,220,0.12)", overflow: "hidden", boxShadow: "2.5px 2.5px 0 #6B2A33" }}>
+                            <JobCardContent job={job} index={jobList.length - i} />
+                        </Card>
                     ))}
-                </div>
+                </CardSwap>
             </div>
         </div>
 
-        {/* Mobile: simple static stack, no pin/scrub */}
-        <div className="md:hidden flex flex-col gap-10 px-6 py-10 text-left">
-            <h1 className="hero__title text-outline text-tan font-saunde leading-[0.85] text-4xl uppercase">
-                Professional
-            </h1>
-            <h1 className="hero__title text-maroon font-saunde leading-[0.85] text-4xl uppercase -mt-4">
+        {/* Mobile: swipeable job card carousel */}
+        <div className="md:hidden reveal relative z-10 flex flex-col items-center gap-6 mt-6">
+            <h1 className="hero__title text-maroon font-saunde leading-[0.85] text-3xl uppercase">
                 Experience
             </h1>
-            <p className="text-secondary font-raleway leading-loose">
-                Experienced Software Engineer with 9 years in web development, frontend-focused and design-focused, with growing full-stack range. Strong experience in e-commerce, fintech, and telecom sectors. Currently working as a Software Engineer supporting clients across the DACH region as an outsourced developer, building a Funeral ERP system and Memorial websites.
-            </p>
 
-            <div className="flex flex-col gap-2 mt-6">
-                {jobList.map((job, index) => (
+            <Carousel
+                items={jobList.map((job, i) => ({ ...job, id: job.company, index: jobList.length - i }))}
+                baseWidth={300}
+                loop
+                renderItem={(job) => (
                     <div
-                        key={job.company}
-                        className="grid grid-cols-[3rem_1fr] gap-4 border-t border-stone-700 py-3"
+                        style={{ border: "1px solid rgba(237,230,220,0.12)", boxShadow: "2.5px 2.5px 0 #6B2A33", height: "440px" }}
+                        className="rounded-xl overflow-hidden"
                     >
-                        <span className="font-saunde text-muted text-xl">{String(index + 1).padStart(2, "0")}</span>
-                        <div className="flex flex-col gap-2">
-                            <div className="flex flex-row justify-between items-center">
-                                <div className="flex flex-row items-center gap-2">
-                                    {job.logo && (
-                                        <span className="w-7 h-7 rounded-md bg-white flex items-center justify-center overflow-hidden shrink-0">
-                                            <img src={job.logo} alt={`${job.company} logo`} className="w-full h-full object-contain p-0.5" />
-                                        </span>
-                                    )}
-                                    <h5 className="text-secondary text-[1rem] font-bold font-raleway">
-                                        {job.company}
-                                    </h5>
-                                </div>
-                                <h5 className="text-muted text-[0.8rem] font-raleway shrink-0">
-                                    {job.duration}
-                                </h5>
-                            </div>
-                            <div className="flex flex-row items-baseline gap-2">
-                                <h5 className={`text-[1rem] font-raleway ${index === 0 ? "text-maroon" : "text-muted"}`}>
-                                    {job.position}
-                                </h5>
-                                <span className="text-muted font-raleway text-xs tracking-[0.1em] uppercase">
-                                    {job.country}
-                                </span>
-                            </div>
-                            {job.summary && (
-                                <p className="text-secondary font-raleway text-base leading-relaxed text-left">
-                                    {job.summary}
-                                </p>
-                            )}
-                            {job.highlights && (
-                                <ul className="flex flex-col gap-1.5 text-left list-none">
-                                    {job.highlights.map((item) => (
-                                        <li
-                                            key={item}
-                                            className="text-muted font-raleway text-base leading-relaxed pl-4 relative before:content-['•'] before:absolute before:left-0 before:text-maroon"
-                                        >
-                                            {item}
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
-                            {job.techStack && (
-                                <div className="flex flex-row flex-wrap justify-start gap-2 text-left">
-                                    {job.techStack.map((tech) => (
-                                        <span
-                                            key={tech}
-                                            className="font-raleway text-[0.65rem] tracking-[0.05em] uppercase text-muted border border-stone-700 rounded-full px-3 py-1"
-                                        >
-                                            {tech}
-                                        </span>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
+                        <JobCardContent job={job} index={job.index} />
                     </div>
-                ))}
-            </div>
+                )}
+            />
         </div>
+      </div>
     </section>
-    )
-}
+);
 
 export default Experience;

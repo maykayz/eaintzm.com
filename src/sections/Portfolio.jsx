@@ -3,14 +3,25 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Dopa from "../assets/images/portfolio/dopa.png";
 import Datawow from "../assets/images/portfolio/datawow.png";
-import DatawowBlog from "../assets/images/portfolio/datawow-blog.png";
-import DriveSafe from "../assets/images/portfolio/drivesafe.png";
 import DriveSafeDrvr from "../assets/images/portfolio/drivesafe-map.jpg";
 import MyMemorial from "../assets/images/portfolio/mymemorial.jpg";
 import EasyPay from "../assets/images/portfolio/easypay.jpg";
 import Telenor from "../assets/images/portfolio/telenor.jpg";
 import PizzaHut from "../assets/images/portfolio/pizzahut.jpg";
-import ParticleField from "../components/ParticleField";
+import Aurora from "../components/Aurora";
+import TelenorLogo from "../assets/images/logos/telenor.png";
+import PizzaHutLogo from "../assets/images/logos/pizzahut.png";
+import NagaseLogo from "../assets/images/logos/nagase.svg";
+import RapidDataLogo from "../assets/images/logos/rapiddata.png";
+import BamThailandLogo from "../assets/images/logos/bam-thailand.svg";
+
+const clients = [
+    { name: "Telenor Myanmar", logo: TelenorLogo },
+    { name: "Pizza Hut Myanmar", logo: PizzaHutLogo },
+    { name: "Nagase Thailand", logo: NagaseLogo },
+    { name: "Rapid Data GmbH", logo: RapidDataLogo, size: "h-10 md:h-48" },
+    { name: "BAM Thailand", logo: BamThailandLogo },
+];
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -44,26 +55,6 @@ const projects = [
         features: ["Product showcase", "Team & culture pages", "SEO-optimized structure", "Google Analytics & GTM"],
         tech: ["Next.js", "Tailwind CSS", "Storybook"],
         image: Datawow,
-    },
-    {
-        category: "Engineering Blog · Thailand",
-        status: "Live",
-        title: "Datawow Blog",
-        url: "datawow.co/blog",
-        description: "Engineering and product blog for Datawow, built for fast publishing and SEO-friendly article pages.",
-        features: ["Fast publishing workflow", "SEO-friendly article pages", "Google Search Console tracking", "Responsive reading layout"],
-        tech: ["Next.js", "TypeScript", "SEO"],
-        image: DatawowBlog,
-    },
-    {
-        category: "Fleet Portal · Thailand & Japan",
-        status: "Live",
-        title: "DriveSafe",
-        url: "drvr.co/drivesafe",
-        description: "Fleet management portal for a client, Nagase Thailand, and our own DriveSafe product. I designed the UI/UX and built the full frontend end to end.",
-        features: ["UI/UX design, end to end", "Real-time vehicle tracking", "Active hours & stop history", "Tire pressure monitoring"],
-        tech: ["React", "WebSocket", "Figma"],
-        image: DriveSafe,
     },
     {
         category: "Live Map View · Thailand & Japan",
@@ -107,7 +98,7 @@ const projects = [
     },
 ];
 
-const UNITS_PER_PROJECT = 2.4; // 1 unit = 100vh of scroll per project
+const UNITS_PER_PROJECT = 2.9; // 1 unit = 100vh of scroll per project
 
 const Portfolio = () => {
     const wrapperRef = useRef(null);
@@ -135,7 +126,7 @@ const Portfolio = () => {
                         trigger: wrapperRef.current,
                         start: "top top",
                         end: "bottom bottom",
-                        scrub: 0.8,
+                        scrub: 1.1,
                         pin: pinRef.current,
                         pinSpacing: false,
                         anticipatePin: 1,
@@ -174,19 +165,28 @@ const Portfolio = () => {
 
     return (
         <section className="section relative">
-            <div className="reveal flex flex-row justify-between items-start section-marker text-muted px-6 md:px-12 pt-8 md:pt-10">
-                <span>Portfolio</span>
-                <span className="hidden md:block">Selected Work</span>
-            </div>
-
             {/* Desktop: pinned, scroll-locked case studies */}
             <div
                 ref={wrapperRef}
                 className="hidden md:block relative"
                 style={{ height: `${(projects.length + 1) * UNITS_PER_PROJECT * 100}vh` }}
             >
-                <div ref={pinRef} className="theme-dark relative h-screen flex flex-row items-center overflow-hidden px-6 md:px-12 gap-6 bg-primary">
-                    <ParticleField color="#E3C7A0" count={220} />
+                <div ref={pinRef} className="theme-dark relative h-screen flex flex-col overflow-hidden px-6 md:px-12 bg-primary">
+                    <div className="absolute inset-0 z-0 pointer-events-none">
+                        <Aurora
+                            colorStops={["#3A1116", "#7A2430", "#C98A93"]}
+                            blend={0.5}
+                            amplitude={1.0}
+                            speed={0.5}
+                        />
+                    </div>
+
+                    <div className="reveal relative z-10 flex flex-row justify-between items-start section-marker text-muted pt-8 md:pt-10 shrink-0">
+                        <span>Portfolio</span>
+                        <span className="hidden md:block">Selected Work</span>
+                    </div>
+
+                    <div className="relative z-10 flex-1 flex flex-row items-center gap-6 min-h-0">
                 <div className="relative flex-1 h-full" style={{ perspective: "1200px" }}>
                     {projects.map((project, index) => (
                         <div
@@ -268,13 +268,18 @@ const Portfolio = () => {
                             />
                         ))}
                     </div>
+                    </div>
                 </div>
             </div>
 
             {/* Mobile: simple static stack, no pin/scrub */}
+            <div className="md:hidden reveal flex flex-row justify-between items-start section-marker text-muted px-6 pt-8">
+                <span>Portfolio</span>
+                <span>Selected Work</span>
+            </div>
             <div className="md:hidden flex flex-col gap-16 px-6 py-10">
                 {projects.map((project, index) => (
-                    <div key={project.title} className="flex flex-col gap-5 text-left">
+                    <div key={project.title} className="reveal flex flex-col gap-5 text-left">
                         <div className="flex flex-row items-center gap-3 font-raleway text-xs tracking-[0.15em] uppercase text-muted">
                             <span>{project.category}</span>
                         </div>
@@ -291,8 +296,8 @@ const Portfolio = () => {
                                     <span className="w-2.5 h-2.5 rounded-full bg-[#4FE07A]" />
                                 </div>
                             </div>
-                            <div className="relative w-full max-h-[50vh] overflow-hidden bg-primary">
-                                <img src={project.image} alt={project.title} className="w-full h-auto block" />
+                            <div className="relative w-full h-48 overflow-hidden bg-primary">
+                                <img src={project.image} alt={project.title} className="w-full h-full object-cover block" />
                                 <div className="absolute inset-0 bg-black/35" />
                             </div>
                         </div>
@@ -324,6 +329,35 @@ const Portfolio = () => {
                         </div>
                     </div>
                 ))}
+            </div>
+
+            <div className="reveal flex flex-col gap-10 md:gap-16 px-6 md:px-12 py-20 overflow-hidden">
+                <div className="flex flex-row justify-between items-start section-marker text-muted">
+                    <span>Clients</span>
+                    <span className="hidden md:block">Worked With</span>
+                </div>
+
+                <div className="flex flex-col gap-3">
+                    <h1
+                        className="hero__title font-saunde leading-[0.85] lg:text-[4rem] md:text-5xl text-4xl uppercase"
+                        style={{ color: "transparent", WebkitTextStroke: "1.5px var(--color-tan)" }}
+                    >
+                        5 Countries
+                    </h1>
+                    <p className="font-raleway text-sm text-muted">
+                        Myanmar · Thailand · Japan · Germany · Norway
+                    </p>
+                </div>
+
+                <div className="marquee w-full">
+                    <div className="marquee__track [animation-duration:12s]">
+                        {[...clients, ...clients].map((client, index) => (
+                            <div key={index} className="flex items-center px-10 shrink-0">
+                                <img src={client.logo} alt={client.name} className={`${client.size || "h-5 md:h-24"} w-auto object-contain`} />
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
         </section>
     );

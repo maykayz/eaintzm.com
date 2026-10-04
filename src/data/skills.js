@@ -1,18 +1,14 @@
 export const skillCategories = [
     {
         title: "Frontend",
-        skills: ["React", "Next.js", "Nuxt.js", "React Native", "TypeScript", "JavaScript", "Vue", "Tailwind CSS", "Material UI"],
+        skills: ["React", "Next.js", "Nuxt.js", "React Native", "TypeScript", "JavaScript", "Vue", "HTML", "CSS", "SCSS", "Tailwind CSS", "Material UI", "shadcn/ui", "jQuery", "Webpack", "npm"],
     },
     {
         title: "Backend",
-        skills: ["Node.js", "NestJS", "Prisma", "MySQL", "Docker", "Azure"],
-    },
-    {
-        title: "AI-Driven Development",
-        skills: ["Claude Code", "Claude Design", "ADO AI", "GitHub Copilot"],
+        skills: ["Node.js", "NestJS", "Express.js", "Prisma", "MySQL", "Docker", "Azure", "AWS", "Cloudflare", "REST API", "Swagger", "JWT / OAuth", "Jest"],
     },
     {
         title: "Tools & Analytics",
-        skills: ["Google Analytics", "Google Tag Manager", "Matomo", "Google Search Console", "SEO", "Accessibility (a11y)", "CookieYes", "Microsoft Clarity", "Sentry"],
+        skills: ["Claude Code", "Claude Design", "ADO AI", "GitHub Copilot", "OpenAI API", "Google Analytics", "Google Tag Manager", "Matomo", "Google Search Console", "SEO", "Accessibility (a11y)", "CookieYes", "Microsoft Clarity", "Sentry"],
     },
 ];
