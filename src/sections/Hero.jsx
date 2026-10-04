@@ -119,7 +119,7 @@ const Hero = () => {
           <span className="hidden md:block">Eaint Thazin Myint</span>
         </div>
 
-        <div className="relative flex-1 flex items-center justify-center min-h-0 translate-y-0 md:translate-y-[220px]">
+        <div className="relative flex-1 flex items-center justify-center min-h-0 translate-y-0 md:translate-y-[60px] lg:translate-y-[100px] xl:translate-y-[150px] 2xl:translate-y-[220px]">
           <span
             ref={hiRef}
             className="absolute inset-x-0 -top-6 md:top-0 text-center text-muted font-raleway text-sm md:text-base tracking-[0.3em] uppercase select-none pointer-events-none"
@@ -129,8 +129,7 @@ const Hero = () => {
 
           <h1
             ref={headlineRef}
-            className="hero__title absolute inset-x-0 text-center text-tan font-saunde uppercase leading-none select-none pointer-events-none"
-            style={{ fontSize: "clamp(7rem, 30vw, 26rem)" }}
+            className="hero__title absolute inset-x-0 text-center text-tan font-saunde uppercase leading-none select-none pointer-events-none text-[7rem] md:text-[8rem] lg:text-[10rem] xl:text-[13rem] 2xl:text-[26rem]"
           >
             Eaint
           </h1>

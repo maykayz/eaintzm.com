@@ -61,8 +61,12 @@ const THROW_DURATION = 900;
 const RUN_OUT_DURATION = 2200;
 const PICKUP_PAUSE = 700;
 const RUN_BACK_DURATION = 2200;
+const RUN_SPEED = 420; // px per second for click-to-run
+const MIN_RUN_DURATION = 300;
 
-const CatCorner = ({ visible = true }) => {
+const WIDGET_OFFSET = 150;
+
+const CatCorner = ({ visible = true, playBounds }) => {
     const [frame, setFrame] = useState(0);
     const [menuOpen, setMenuOpen] = useState(false);
     const [action, setAction] = useState(null);
@@ -76,8 +80,10 @@ const CatCorner = ({ visible = true }) => {
     const [thought, setThought] = useState(null);
     const timerRef = useRef(null);
     const thoughtHideRef = useRef(null);
+    const spriteWrapRef = useRef(null);
 
-    const mood = menuOpen ? "excited" : action === "playing" ? "running" : action || idlePose;
+    const mood =
+        menuOpen ? "excited" : action === "playing" || action === "moving" ? "running" : action || idlePose;
     const { src, frames, fps, frameSize, loop = true, displaySize = 134 } = SPRITES[mood];
 
     useEffect(() => {
@@ -132,6 +138,40 @@ const CatCorner = ({ visible = true }) => {
         };
     }, [mood, menuOpen]);
 
+    const LOCKED_ACTIONS = ["eating", "sleeping", "sleepyTransition", "box", "boxSettled", "playing", "moving"];
+
+    const restLeft = playBounds ? playBounds.right - WIDGET_OFFSET : null;
+    const maxRunDistance = playBounds
+        ? Math.max(100, restLeft - playBounds.left)
+        : Math.max(300, window.innerWidth - 220);
+
+    const handleRunTo = (clickX) => {
+        if (menuOpen || LOCKED_ACTIONS.includes(action)) return;
+
+        const wrap = spriteWrapRef.current;
+        if (!wrap) return;
+
+        const rect = wrap.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const delta = clickX - centerX;
+
+        const newCatX = Math.max(-maxRunDistance, Math.min(0, catX + delta));
+        const travel = Math.abs(newCatX - catX);
+        if (travel < 4) return;
+
+        const duration = Math.max(MIN_RUN_DURATION, (travel / RUN_SPEED) * 1000);
+
+        clearTimeout(timerRef.current);
+        setFacingLeft(newCatX < catX);
+        setAction("moving");
+        setCatDuration(duration);
+        setCatX(newCatX);
+
+        timerRef.current = setTimeout(() => {
+            setAction(null);
+        }, duration);
+    };
+
     const handleMenuAction = (menuAction) => {
         setMenuOpen(false);
         clearTimeout(timerRef.current);
@@ -147,7 +187,7 @@ const CatCorner = ({ visible = true }) => {
         } else if (menuAction === "sleep") {
             setAction("sleeping");
         } else if (menuAction === "play") {
-            const distance = Math.max(300, window.innerWidth - 220);
+            const distance = maxRunDistance;
 
             setAction("playing");
             setBallVisible(true);
@@ -189,16 +229,30 @@ const CatCorner = ({ visible = true }) => {
     if (!visible) return null;
 
     return (
-        <div
-            className="fixed right-6 z-50 cursor-auto"
-            style={{ bottom: "124px" }}
-            onMouseEnter={() => window.dispatchEvent(new Event("cursor:hide"))}
-            onMouseLeave={() => window.dispatchEvent(new Event("cursor:show"))}
-        >
+        <>
+            <div
+                className="absolute z-40 cursor-pointer"
+                style={
+                    playBounds
+                        ? { bottom: playBounds.bottom, height: "144px", left: playBounds.left, width: Math.max(0, playBounds.right - playBounds.left) }
+                        : { bottom: "124px", height: "144px", left: 0, right: 0 }
+                }
+                onClick={(e) => handleRunTo(e.clientX)}
+            />
+            <div
+                className="absolute z-50 cursor-auto"
+                style={
+                    restLeft !== null
+                        ? { bottom: playBounds.bottom, left: restLeft, pointerEvents: "none" }
+                        : { bottom: "124px", right: "24px", pointerEvents: "none" }
+                }
+                onMouseEnter={() => window.dispatchEvent(new Event("cursor:hide"))}
+                onMouseLeave={() => window.dispatchEvent(new Event("cursor:show"))}
+            >
             {menuOpen && (
                 <div
                     className="absolute bottom-full right-0 mb-2"
-                    style={{ width: PANEL_W, height: PANEL_H }}
+                    style={{ width: PANEL_W, height: PANEL_H, pointerEvents: "auto" }}
                 >
                     <img
                         src={CatMenuPanel}
@@ -270,7 +324,7 @@ const CatCorner = ({ visible = true }) => {
             {action === "sleeping" && !menuOpen && (
                 <div
                     className="absolute w-56 h-56 pointer-events-none"
-                    style={{ right: "-34px", bottom: "-73px", zIndex: 0, imageRendering: "pixelated" }}
+                    style={{ right: "10px", bottom: "-73px", zIndex: 0, imageRendering: "pixelated" }}
                 >
                     <img src={CatBedBrown} alt="" className="w-full h-full object-contain" />
                 </div>
@@ -282,6 +336,7 @@ const CatCorner = ({ visible = true }) => {
                     zIndex: 10,
                     transform: `translateX(${catX}px)`,
                     transition: `transform ${catDuration}ms linear`,
+                    pointerEvents: "auto",
                 }}
             >
                 <button
@@ -290,19 +345,22 @@ const CatCorner = ({ visible = true }) => {
                     aria-label="Open cat menu"
                     className="w-36 h-36 flex items-center justify-center overflow-hidden"
                 >
-                    <div
-                        style={{
-                            width: frameSize,
-                            height: frameSize,
-                            backgroundImage: `url(${src})`,
-                            backgroundPosition: `-${frame * frameSize}px 0`,
-                            imageRendering: "pixelated",
-                            transform: `scale(${displaySize / frameSize}) scaleX(${facingLeft ? -1 : 1})`,
-                        }}
-                    />
+                    <div ref={spriteWrapRef}>
+                        <div
+                            style={{
+                                width: frameSize,
+                                height: frameSize,
+                                backgroundImage: `url(${src})`,
+                                backgroundPosition: `-${frame * frameSize}px 0`,
+                                imageRendering: "pixelated",
+                                transform: `scale(${displaySize / frameSize}) scaleX(${facingLeft ? -1 : 1})`,
+                            }}
+                        />
+                    </div>
                 </button>
             </div>
-        </div>
+            </div>
+        </>
     );
 };
 

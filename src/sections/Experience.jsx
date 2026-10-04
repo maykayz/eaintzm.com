@@ -1,10 +1,10 @@
+import CardSwap, { Card } from '../components/CardSwap';
 import DbotLogo from '../assets/images/logos/dbot.png';
 import DatawowLogo from '../assets/images/logos/datawow.svg';
 import DrvrLogo from '../assets/images/logos/drvr.png';
 import AgdBankLogo from '../assets/images/logos/agdbank.svg';
 import Rgo47Logo from '../assets/images/logos/rgo47.webp';
 import CreativeLogo from '../assets/images/logos/creative.png';
-import JourneyMap from '../components/JourneyMap';
 
 const jobList = [
     {
@@ -12,191 +12,148 @@ const jobList = [
         logo: DbotLogo,
         position: "Software Engineer",
         duration: "November 2026 - Present",
-        country: "Thailand",
-        summary: "Building a Funeral ERP system and Memorial Page for Rapid Data GmbH, from day-to-day funeral operations to AI-driven development.",
-        highlights: [
-            "Built the Funeral ERP system covering the full funeral process, from picking up the deceased to ceremonies, cremation and urns, integrated with Norway's Digital Gravferdsmelding (DGM) platform for death notices and permits.",
-            "Developed the Memorial Page entirely through AI-driven development with Claude, ADO AI and GitHub Copilot, where families and friends share photos and memories of the deceased.",
-            "Built a widget package letting funeral houses customize and white-label their own Memorial Page theme, with Matomo analytics tracking at the company level."
-        ],
-        techStack: ["Next.js", "TypeScript", "Jest", "Playwright", "Storybook", "C#.NET", "PostgreSQL", "Azure", "Docker", "Azure ADO AI", "GitHub Copilot", "Claude Design", "Claude Code", "Matomo", "CookieYes", "Accessibility (a11y)", "i18n"]
+        durationNumber: "2026 - Present",
+        year: "2026",
+        summary: "Building a Funeral ERP system and Memorial Page for Rapid Data GmbH, from day-to-day funeral operations to AI-driven development, following accessibility and EU standards, with Matomo for tracking.",
+        techStack: ["Next.js", "TypeScript", "C#.NET", "PostgreSQL", "Azure", "Claude Code", "Matomo"]
     },
     {
         company: "Datawow",
         logo: DatawowLogo,
-        position: "Software Engineer (Frontend)",
+        position: "Frontend Developer",
         duration: "April 2024 - October 2025",
-        country: "Thailand",
-        summary: "Supported Japanese and internal Datawow projects as a frontend developer, with a focus on analytics and SEO tooling.",
-        highlights: [
-            "Supported Dopa JP, a Japanese client, on their gacha website.",
-            "Worked across internal projects including CookieWow and LearnPDPA, plus the BAM and disaster system projects.",
-            "Set up internal products with Google Tag Manager and Google Analytics, supporting SEO and Google Search Console."
-        ],
-        techStack: ["React", "Next.js", "TypeScript", "Storybook", "Jest", "Google Analytics", "Google Tag Manager", "Google Search Console", "SEO"]
+        durationNumber: "2024 - 2025",
+        year: "2024",
+        summary: "Developed and maintained front-end web applications with Next.js, from reproducing issues and fixing bugs to integrating Google Analytics and Google Tag Manager for behavior tracking, and upheld code quality through reviews and testing.",
+        techStack: ["Next.js", "React", "TypeScript", "Google Analytics", "Google Tag Manager", "Sentry", "Microsoft Clarity"]
     },
     {
         company: "DRVR",
         logo: DrvrLogo,
-        position: "Senior Software Engineer (Full-Stack & UI/UX)",
+        position: "Software Engineer, Frontend and UI/UX",
         duration: "July 2022 - April 2024",
-        country: "Thailand",
-        summary: "Built a fleet management system with real-time vehicle tracking, and designed the UI/UX across the DriveSafe portal and web products.",
-        highlights: [
-            "Developed real-time vehicle tracking over WebSocket, showing active hours, stops, driving status and tire pressure.",
-            "Built the DriveSafe portal supporting a client, Nagase Thailand, alongside our own DriveSafe product.",
-            "Maintained the DRVR website on WordPress, and designed UI/UX for the application and web portals, working closely with the CEO and PM."
-        ],
-        techStack: ["React", "WebSocket", "WordPress", "Figma"]
+        durationNumber: "2022 - 2024",
+        year: "2022",
+        summary: "Built and maintained internal platforms for tracking and analyzing driving behavior using React.js and MUI, integrating Mapbox and HERE Maps for real-time tracking, data-centric dashboards, and customizable reports. Designed the UI/UX across products and mentored junior developers.",
+        techStack: ["React.js", "MUI", "Mapbox", "HERE Maps", "WordPress"]
     },
     {
         company: "AGDBank",
         logo: AgdBankLogo,
-        position: "Software Engineer",
+        position: "React Developer",
         duration: "July 2021 - July 2022",
-        country: "Myanmar"
+        durationNumber: "2021 - 2022",
+        year: "2021",
+        summary: "Engineered and maintained the web-based wallet management portal with React.js, and played a key role building the Business Wallet App with React Native. Identified and fixed bugs, and contributed to requirements and feature discussions through Agile practices.",
+        techStack: ["React", "React Native", "Agile"]
     },
     {
         company: "rgo47",
         logo: Rgo47Logo,
-        position: "Senior Software Engineer",
+        position: "Senior Frontend Developer",
         duration: "October 2019 - May 2021",
-        country: "Myanmar"
+        durationNumber: "2019 - 2021",
+        year: "2019",
+        summary: "Designed UI/UX and built frontend for Seller Center, Sale Manager portal, ERP system, and delivery portal using Vue.js and Vuex. Built an internal UI component library and an npm package for shared micro-service components.",
+        techStack: ["Vue.js", "Nuxt.js", "Vuex", "Webpack"]
     },
     {
         company: "CREATiVE",
         logo: CreativeLogo,
-        position: "Senior Software Engineer (UI/UX)",
+        position: "Senior Frontend Developer",
         duration: "March 2017 - October 2019",
-        country: "Myanmar"
+        durationNumber: "2017 - 2019",
+        summary: "Turned design mockups into production websites for clients including Telenor Myanmar, Pizza Hut Myanmar, and Mango Media. Built a CSS theme library and jQuery plugins, developed the Telenor Myanmar website along with its MyAccount and SIM Registration portals, and tracked user behavior with Google Tag Manager and Google Analytics.",
+        techStack: ["jQuery", "CSS", "Google Tag Manager", "Google Analytics"],
+        year: "2017"
     }
 ];
 
-const JobContent = ({ job, align = "left" }) => (
-    <div className={`flex flex-col gap-3 ${align === "right" ? "text-right items-end" : "text-left items-start"}`}>
-        <div className={`flex flex-row flex-wrap items-center gap-3 ${align === "right" ? "flex-row-reverse" : ""}`}>
-            {job.logo && (
-                <span className="w-9 h-9 rounded-lg bg-white flex items-center justify-center overflow-hidden shrink-0">
-                    <img src={job.logo} alt={`${job.company} logo`} className="w-full h-full object-contain p-1" />
-                </span>
-            )}
-            <h3 className="hero__title text-secondary font-saunde lg:text-3xl md:text-2xl text-xl uppercase">
-                {job.company}
-            </h3>
-            <span className="text-muted font-raleway text-xs tracking-[0.1em] uppercase">
-                {job.country}
+const JobCardContent = ({ job, index }) => (
+    <div
+        className="relative h-full w-full flex flex-col"
+        style={{ backgroundColor: "#2A0F13" }}
+    >
+        <div className="shrink-0 w-full flex items-center gap-3 px-4" style={{ backgroundColor: "#F8F2EA", height: "40px" }}>
+            <span className="font-raleway text-[10px] md:text-xs tracking-[0.2em] text-[#2A0F13] select-none text-left">
+                {String(index).padStart(2, "0")}
+            </span>
+            <span className="font-raleway text-xs font-bold tracking-[0.15em] uppercase text-[#6B2A33]">
+                {job.company} ({job.durationNumber})
             </span>
         </div>
 
-        <span className="font-raleway text-base text-maroon">{job.position}</span>
+        <div className="flex flex-col flex-1 p-6 md:p-7 pt-4">
 
-        {job.summary && (
-            <p className="text-secondary font-raleway text-sm md:text-base leading-relaxed max-w-md">
-                {job.summary}
-            </p>
-        )}
+        <p className="font-raleway text-[#F7F2EA] text-sm md:text-base leading-snug flex-1 flex items-center mt-2 line-clamp-3 overflow-hidden">
+            {job.summary || `${job.position} at ${job.company}, ${job.duration}.`}
+        </p>
 
-        {job.highlights && (
-            <ul className={`flex flex-col gap-1.5 max-w-md list-none ${align === "right" ? "items-end" : "items-start"}`}>
-                {job.highlights.map((item) => (
-                    <li
-                        key={item}
-                        className={`text-muted font-raleway text-sm md:text-base leading-relaxed relative ${
-                            align === "right"
-                                ? "pr-4 before:content-['•'] before:absolute before:right-0 before:text-maroon"
-                                : "pl-4 before:content-['•'] before:absolute before:left-0 before:text-maroon"
-                        }`}
-                    >
-                        {item}
-                    </li>
-                ))}
-            </ul>
-        )}
-
-        {job.techStack && (
-            <div className={`flex flex-row flex-wrap gap-2 ${align === "right" ? "justify-end" : "justify-start"}`}>
+        {job.techStack?.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mb-2 pt-4">
                 {job.techStack.map((tech) => (
                     <span
                         key={tech}
-                        className="font-raleway text-[0.65rem] tracking-[0.05em] uppercase text-muted border border-stone-700 rounded-full px-3 py-1"
+                        className="font-raleway text-[10px] md:text-xs text-[#2A0F13] bg-[#F8F2EA] rounded-full px-2 py-0.5"
                     >
                         {tech}
                     </span>
                 ))}
             </div>
         )}
-    </div>
-);
 
-const MobileTimelineEntry = ({ job, isLast }) => (
-    <div className="reveal grid grid-cols-[2.5rem_1fr] gap-4">
-        <div className="flex flex-col items-center">
-            <span className="w-3 h-3 rounded-full bg-maroon shrink-0 mt-2" />
-            {!isLast && <span className="w-px flex-1 bg-stone-800 mt-2" />}
-        </div>
-        <div className="pb-14">
-            <span className="text-muted font-raleway text-xs block mb-2">{job.duration}</span>
-            <JobContent job={job} align="left" />
-        </div>
-    </div>
-);
-
-const DesktopTimelineEntry = ({ job, index }) => {
-    const alignLeft = index % 2 === 0;
-    return (
-        <div className="reveal relative grid grid-cols-2 gap-16 pb-20">
-            <div className="absolute left-1/2 -translate-x-1/2 top-0 flex flex-col items-center gap-2 z-10">
-                <span className="w-3 h-3 rounded-full bg-maroon shrink-0" />
-                <span className="text-muted font-raleway text-[0.7rem] whitespace-nowrap text-center">
-                    {job.duration}
+        <div className="flex items-center justify-between gap-3 pt-2 border-t border-[#4A2126] shrink-0">
+            <div className="flex flex-col gap-0.5 text-left">
+                <span className="font-raleway font-semibold text-sm md:text-base text-[#F7F2EA] text-left">{job.position}</span>
+                <span className="font-raleway text-xs md:text-sm text-[#B9A9A4] text-left">{job.duration}</span>
+            </div>
+            {job.logo && (
+                <span className="w-10 h-10 rounded bg-white flex items-center justify-center overflow-hidden shrink-0">
+                    <img src={job.logo} alt={`${job.company} logo`} className="w-full h-full object-contain p-1" />
                 </span>
-            </div>
-
-            <div className={alignLeft ? "flex justify-end pr-12" : "col-start-2 flex justify-start pl-12"}>
-                <JobContent job={job} align={alignLeft ? "right" : "left"} />
-            </div>
+            )}
         </div>
-    );
-};
+        </div>
+    </div>
+);
 
-const Experience = () => {
-    return (
-        <section className="section relative px-6 md:px-12 py-16 md:py-24">
-            <div className="reveal flex flex-row justify-between items-start section-marker text-muted">
-                <span>Experience</span>
-                <span className="hidden md:block">9 Years</span>
-            </div>
+const Experience = () => (
+    <section className="h-screen bg-grain relative px-6 md:px-12 py-5 overflow-hidden flex flex-col">
+        <div className="reveal flex flex-row justify-between items-start section-marker text-muted shrink-0">
+            <span>Experience</span>
+            <span className="hidden md:block">9 Years</span>
+        </div>
 
-            <div className="reveal flex flex-col gap-4 mt-10 md:mt-14 max-w-2xl">
-                <h1 className="hero__title text-outline text-tan font-saunde leading-[0.85] lg:text-[4.5rem] md:text-5xl text-4xl uppercase">
-                    Professional
-                </h1>
-                <h1 className="hero__title text-maroon font-saunde leading-[0.85] lg:text-[4.5rem] md:text-5xl text-4xl uppercase -mt-2 md:-mt-4">
+        <div className="flex-1 flex flex-col items-center justify-center min-h-0 gap-40">
+            <div className="reveal relative flex flex-col items-center gap-2 max-w-2xl mx-auto text-center shrink-0">
+                <h1 className="hero__title text-maroon font-saunde leading-[0.85] text-3xl md:text-4xl lg:text-5xl uppercase">
                     Experience
                 </h1>
-                <p className="text-secondary font-raleway leading-loose">
-                    Experienced Software Engineer with 9 years in web development, frontend-focused and design-focused, with growing full-stack range. Strong experience in e-commerce, fintech, and telecom sectors. Currently working as a Software Engineer supporting clients across the DACH region as an outsourced developer, building a Funeral ERP system and Memorial websites.
+                <p className="text-secondary font-raleway leading-snug text-xs md:text-sm">
+                    Software Engineer with 9 years across frontend, design, and growing full-stack work.
                 </p>
             </div>
 
-            <JourneyMap />
-
-            {/* Mobile: left-aligned stacked timeline */}
-            <div className="md:hidden flex flex-col mt-14 max-w-3xl">
-                {jobList.map((job, index) => (
-                    <MobileTimelineEntry key={job.company} job={job} isLast={index === jobList.length - 1} />
-                ))}
+            <div className="reveal relative mx-auto w-full shrink-0" style={{ height: "520px", maxWidth: "720px", transform: "translateX(-100px)" }}>
+                <CardSwap
+                    width={460}
+                    height={380}
+                    cardDistance={55}
+                    verticalDistance={60}
+                    delay={0}
+                    pauseOnHover
+                    easing="elastic"
+                    skewAmount={0}
+                >
+                    {jobList.map((job, i) => (
+                        <Card key={job.company} style={{ borderRadius: 14, border: "1px solid rgba(237,230,220,0.12)", overflow: "hidden", boxShadow: "2.5px 2.5px 0 #6B2A33" }}>
+                            <JobCardContent job={job} index={jobList.length - i} />
+                        </Card>
+                    ))}
+                </CardSwap>
             </div>
-
-            {/* Desktop: centered line, alternating left/right, years on the line */}
-            <div className="hidden md:block relative mt-20 max-w-4xl mx-auto">
-                <div className="absolute left-1/2 top-0 bottom-0 w-px bg-stone-800 -translate-x-1/2" />
-                {jobList.map((job, index) => (
-                    <DesktopTimelineEntry key={job.company} job={job} index={index} />
-                ))}
-            </div>
-        </section>
-    );
-};
+        </div>
+    </section>
+);
 
 export default Experience;

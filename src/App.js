@@ -8,11 +8,10 @@ import Stats from "./sections/Stats";
 import Skills from "./sections/Skills";
 import Experience from "./sections/Experience";
 import Portfolio from "./sections/Portfolio";
-import Client from "./sections/Client";
 import ContactMe from "./sections/ContactMe";
-import CustomCursor from "./components/CustomCursor";
-import Footer from "./components/footer";
+import SplashCursor from "./components/SplashCursor";
 import CatAssetGallery from "./pages/CatAssetGallery";
+import Story from "./pages/Story";
 import "./App.scss";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -59,7 +58,18 @@ function Home() {
 				<div className="scroll-progress__bar" />
 			</div>
 			<div className="hidden md:block">
-				<CustomCursor />
+				<SplashCursor
+					DENSITY_DISSIPATION={3.5}
+					VELOCITY_DISSIPATION={2}
+					PRESSURE={0.1}
+					CURL={3}
+					SPLAT_RADIUS={0.2}
+					SPLAT_FORCE={6000}
+					COLOR_UPDATE_SPEED={10}
+					SHADING
+					RAINBOW_MODE={false}
+					COLOR="#7A2430"
+				/>
 			</div>
 
 			<Hero />
@@ -67,9 +77,7 @@ function Home() {
 			<Skills />
 			<Experience />
 			<Portfolio />
-			<Client />
 			<ContactMe />
-			<Footer />
 		</div>
 	);
 }
@@ -80,6 +88,7 @@ function App() {
 			<Routes>
 				<Route path="/" element={<Home />} />
 				<Route path="/cat-assets" element={<CatAssetGallery />} />
+				<Route path="/story" element={<Story />} />
 			</Routes>
 		</BrowserRouter>
 	);
