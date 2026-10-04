@@ -71,7 +71,7 @@ const ContactMe = () => {
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 md:gap-10 shrink-0">
                 <div ref={rightBlockRef} className="flex flex-col gap-3 md:gap-4 max-w-sm order-1 md:order-2 md:ml-auto">
                     <p className="font-raleway text-xs md:text-sm text-secondary leading-relaxed">
-                        Based in Thailand, open to remote work with teams across any timezone. Fintech, e-commerce, ERP, telecom, or something I haven't tried yet — I'm in.
+                        Based in Thailand, open to remote/relocate with teams across Asia and any timezone. Fintech, e-commerce, ERP, telecom, or something I haven't tried yet — I'm in.
                     </p>
 
                     <a
