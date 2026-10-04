@@ -143,6 +143,12 @@ const BRAND_COLORS = {
 
 const ALL_SKILLS = skillCategories.flatMap((c) => c.skills);
 
+const MOBILE_SKILLS = [
+    "React", "Next.js", "Vue", "TypeScript", "JavaScript", "Tailwind CSS",
+    "Node.js", "MySQL", "Docker", "AWS", "Azure",
+    "Google Analytics", "Jest", "Claude Code", "GitHub Copilot", "Sentry",
+];
+
 const escapeXml = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 const skillToDataUri = (skill) => {
@@ -169,10 +175,10 @@ const Skills = () => {
 
     return (
         <section
-            className="theme-dark h-screen relative px-6 md:px-12 py-6 overflow-hidden flex flex-col justify-center"
+            className="theme-dark relative px-6 md:px-12 py-10 md:py-6 md:h-screen overflow-hidden flex flex-col justify-center"
             style={{ backgroundColor: "#0B0B0C" }}
         >
-            <div className="absolute inset-0 z-0 pointer-events-none">
+            <div className="hidden md:block absolute inset-0 z-0 pointer-events-none">
                 <Aurora
                     colorStops={["#3A1116", "#7A2430", "#C98A93"]}
                     blend={0.5}
@@ -181,18 +187,18 @@ const Skills = () => {
                 />
             </div>
 
-            <div className="reveal absolute top-6 left-6 right-6 md:top-8 md:left-12 md:right-12 z-10 flex flex-row justify-between items-start section-marker text-muted">
+            <div className="reveal relative md:absolute top-0 md:top-8 left-0 md:left-12 right-0 md:right-12 z-10 flex flex-row justify-between items-start section-marker text-muted">
                 <span>Tech & Tools</span>
                 <span className="hidden md:block">Area of Expertise</span>
             </div>
 
-            <div className="reveal relative z-10 flex flex-col items-center gap-2 max-w-2xl mx-auto text-center shrink-0">
+            <div className="reveal relative z-10 flex flex-col items-center gap-2 max-w-2xl mx-auto text-center shrink-0 mt-6 md:mt-0">
                 <h1 className="hero__title text-tan font-saunde uppercase leading-none text-4xl md:text-5xl lg:text-6xl">
                     Tech & Tools
                 </h1>
             </div>
 
-            <div className="reveal relative z-10 mt-4 md:mt-6" style={{ height: "500px" }}>
+            <div className="hidden md:block reveal relative z-10 mt-4 md:mt-6" style={{ height: "500px" }}>
                 <DomeGallery
                     images={images}
                     fit={0.35}
@@ -207,6 +213,22 @@ const Skills = () => {
                     segments={ALL_SKILLS.length <= 16 ? 16 : 30}
                     autoRotateSpeed={4}
                 />
+            </div>
+
+            <div className="md:hidden reveal relative z-10 flex flex-wrap justify-center gap-2 mt-8">
+                {MOBILE_SKILLS.map((skill) => {
+                    const Icon = ICONS[skill] || FiCpu;
+                    const color = BRAND_COLORS[skill] || "#C98A93";
+                    return (
+                        <span
+                            key={skill}
+                            className="flex items-center gap-2 font-raleway text-xs text-[#EDE6DC] bg-white/5 border border-white/10 rounded-full px-3 py-1.5"
+                        >
+                            <Icon color={color} size={14} />
+                            {skill}
+                        </span>
+                    );
+                })}
             </div>
         </section>
     );

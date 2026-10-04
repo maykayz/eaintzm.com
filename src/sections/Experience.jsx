@@ -1,4 +1,5 @@
 import CardSwap, { Card } from '../components/CardSwap';
+import Carousel from '../components/Carousel';
 import DbotLogo from '../assets/images/logos/dbot.png';
 import DatawowLogo from '../assets/images/logos/datawow.svg';
 import DrvrLogo from '../assets/images/logos/drvr.png';
@@ -118,13 +119,15 @@ const JobCardContent = ({ job, index }) => (
 );
 
 const Experience = () => (
-    <section className="h-screen bg-grain relative px-6 md:px-12 py-5 overflow-hidden flex flex-col">
-        <div className="reveal flex flex-row justify-between items-start section-marker text-muted shrink-0">
+    <section className="md:h-screen bg-grain relative px-6 md:px-12 py-10 md:py-5 overflow-hidden flex flex-col">
+      <div className="relative w-full h-full flex flex-col">
+        <div className="reveal relative z-10 flex flex-row justify-between items-start section-marker text-muted shrink-0">
             <span>Experience</span>
             <span className="hidden md:block">9 Years</span>
         </div>
 
-        <div className="flex-1 flex flex-col items-center justify-center min-h-0 gap-40">
+        {/* Desktop: card stack */}
+        <div className="hidden md:flex relative z-10 flex-1 flex-col items-center justify-center min-h-0 gap-40">
             <div className="reveal relative flex flex-col items-center gap-2 max-w-2xl mx-auto text-center shrink-0">
                 <h1 className="hero__title text-maroon font-saunde leading-[0.85] text-3xl md:text-4xl lg:text-5xl uppercase">
                     Experience
@@ -153,6 +156,28 @@ const Experience = () => (
                 </CardSwap>
             </div>
         </div>
+
+        {/* Mobile: swipeable job card carousel */}
+        <div className="md:hidden reveal relative z-10 flex flex-col items-center gap-6 mt-6">
+            <h1 className="hero__title text-maroon font-saunde leading-[0.85] text-3xl uppercase">
+                Experience
+            </h1>
+
+            <Carousel
+                items={jobList.map((job, i) => ({ ...job, id: job.company, index: jobList.length - i }))}
+                baseWidth={300}
+                loop
+                renderItem={(job) => (
+                    <div
+                        style={{ border: "1px solid rgba(237,230,220,0.12)", boxShadow: "2.5px 2.5px 0 #6B2A33", height: "440px" }}
+                        className="rounded-xl overflow-hidden"
+                    >
+                        <JobCardContent job={job} index={job.index} />
+                    </div>
+                )}
+            />
+        </div>
+      </div>
     </section>
 );
 

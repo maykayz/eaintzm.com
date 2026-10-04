@@ -10,8 +10,6 @@ import Experience from "./sections/Experience";
 import Portfolio from "./sections/Portfolio";
 import ContactMe from "./sections/ContactMe";
 import SplashCursor from "./components/SplashCursor";
-import CatAssetGallery from "./pages/CatAssetGallery";
-import Story from "./pages/Story";
 import "./App.scss";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -30,7 +28,7 @@ function Home() {
 						ease: "power3.out",
 						scrollTrigger: {
 							trigger: el,
-							start: "top 85%",
+							start: "top 95%",
 							toggleActions: "play none none reverse",
 						},
 					}
@@ -49,7 +47,15 @@ function Home() {
 			});
 		});
 
-		return () => ctx.revert();
+		const refresh = () => ScrollTrigger.refresh();
+		window.addEventListener("load", refresh);
+		const timeoutId = setTimeout(refresh, 500);
+
+		return () => {
+			ctx.revert();
+			window.removeEventListener("load", refresh);
+			clearTimeout(timeoutId);
+		};
 	}, []);
 
 	return (
@@ -87,8 +93,6 @@ function App() {
 		<BrowserRouter>
 			<Routes>
 				<Route path="/" element={<Home />} />
-				<Route path="/cat-assets" element={<CatAssetGallery />} />
-				<Route path="/story" element={<Story />} />
 			</Routes>
 		</BrowserRouter>
 	);

@@ -19,7 +19,7 @@ const clients = [
     { name: "Telenor Myanmar", logo: TelenorLogo },
     { name: "Pizza Hut Myanmar", logo: PizzaHutLogo },
     { name: "Nagase Thailand", logo: NagaseLogo },
-    { name: "Rapid Data GmbH", logo: RapidDataLogo, size: "h-32 md:h-48" },
+    { name: "Rapid Data GmbH", logo: RapidDataLogo, size: "h-10 md:h-48" },
     { name: "BAM Thailand", logo: BamThailandLogo },
 ];
 
@@ -165,18 +165,13 @@ const Portfolio = () => {
 
     return (
         <section className="section relative">
-            <div className="reveal flex flex-row justify-between items-start section-marker text-muted px-6 md:px-12 pt-8 md:pt-10">
-                <span>Portfolio</span>
-                <span className="hidden md:block">Selected Work</span>
-            </div>
-
             {/* Desktop: pinned, scroll-locked case studies */}
             <div
                 ref={wrapperRef}
                 className="hidden md:block relative"
                 style={{ height: `${(projects.length + 1) * UNITS_PER_PROJECT * 100}vh` }}
             >
-                <div ref={pinRef} className="theme-dark relative h-screen flex flex-row items-center overflow-hidden px-6 md:px-12 gap-6 bg-primary">
+                <div ref={pinRef} className="theme-dark relative h-screen flex flex-col overflow-hidden px-6 md:px-12 bg-primary">
                     <div className="absolute inset-0 z-0 pointer-events-none">
                         <Aurora
                             colorStops={["#3A1116", "#7A2430", "#C98A93"]}
@@ -185,6 +180,13 @@ const Portfolio = () => {
                             speed={0.5}
                         />
                     </div>
+
+                    <div className="reveal relative z-10 flex flex-row justify-between items-start section-marker text-muted pt-8 md:pt-10 shrink-0">
+                        <span>Portfolio</span>
+                        <span className="hidden md:block">Selected Work</span>
+                    </div>
+
+                    <div className="relative z-10 flex-1 flex flex-row items-center gap-6 min-h-0">
                 <div className="relative flex-1 h-full" style={{ perspective: "1200px" }}>
                     {projects.map((project, index) => (
                         <div
@@ -266,13 +268,18 @@ const Portfolio = () => {
                             />
                         ))}
                     </div>
+                    </div>
                 </div>
             </div>
 
             {/* Mobile: simple static stack, no pin/scrub */}
+            <div className="md:hidden reveal flex flex-row justify-between items-start section-marker text-muted px-6 pt-8">
+                <span>Portfolio</span>
+                <span>Selected Work</span>
+            </div>
             <div className="md:hidden flex flex-col gap-16 px-6 py-10">
                 {projects.map((project, index) => (
-                    <div key={project.title} className="flex flex-col gap-5 text-left">
+                    <div key={project.title} className="reveal flex flex-col gap-5 text-left">
                         <div className="flex flex-row items-center gap-3 font-raleway text-xs tracking-[0.15em] uppercase text-muted">
                             <span>{project.category}</span>
                         </div>
@@ -289,8 +296,8 @@ const Portfolio = () => {
                                     <span className="w-2.5 h-2.5 rounded-full bg-[#4FE07A]" />
                                 </div>
                             </div>
-                            <div className="relative w-full max-h-[50vh] overflow-hidden bg-primary">
-                                <img src={project.image} alt={project.title} className="w-full h-auto block" />
+                            <div className="relative w-full h-48 overflow-hidden bg-primary">
+                                <img src={project.image} alt={project.title} className="w-full h-full object-cover block" />
                                 <div className="absolute inset-0 bg-black/35" />
                             </div>
                         </div>
@@ -346,7 +353,7 @@ const Portfolio = () => {
                     <div className="marquee__track [animation-duration:12s]">
                         {[...clients, ...clients].map((client, index) => (
                             <div key={index} className="flex items-center px-10 shrink-0">
-                                <img src={client.logo} alt={client.name} className={`${client.size || "h-16 md:h-24"} w-auto object-contain`} />
+                                <img src={client.logo} alt={client.name} className={`${client.size || "h-5 md:h-24"} w-auto object-contain`} />
                             </div>
                         ))}
                     </div>
