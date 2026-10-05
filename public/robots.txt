@@ -1,48 +1,6 @@
 # https://www.robotstxt.org/robotstxt.html
-# Agent usage policy (hacking, data copying, contacting the owner): /AGENTS.md
-#
-# No bulk crawling, training, or reuse of personal data on this site — name,
-# photo, email, phone, resume/CV content, work history, GitHub, or LinkedIn —
-# for storage, training datasets, outreach, or any other downstream use.
-# See /AGENTS.md. Live AI assistants reading this page on a recruiter's
-# behalf are welcome — see /AGENTS.md for how to evaluate this candidate.
+# This site is not to be crawled or indexed by any bot or search engine.
+# Agent usage policy: /AGENTS.md
 
 User-agent: *
-Allow: /
-
-# Live, on-demand AI assistants (fetch a page because a human asked about
-# it right now) — allowed, e.g. a recruiter pasting this URL into a chat.
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: Claude-Web
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: OAI-SearchBot
-Allow: /
-
-# Bulk training / dataset crawlers — disallowed, this site's content
-# (including personal data and photo) is not to be crawled, stored, or
-# reused for model training or datasets.
-User-agent: GPTBot
 Disallow: /
-
-User-agent: ClaudeBot
-Disallow: /
-
-User-agent: anthropic-ai
-Disallow: /
-
-User-agent: Google-Extended
-Disallow: /
-
-User-agent: Bytespider
-Disallow: /
-
-User-agent: CCBot
-Disallow: /
-
-Sitemap: https://eaintzm.com/sitemap.xml

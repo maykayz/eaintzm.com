@@ -4,7 +4,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import Hero from "./sections/Hero";
-import Stats from "./sections/Stats";
+import Summary from "./sections/Summary";
 import Skills from "./sections/Skills";
 import Experience from "./sections/Experience";
 import Portfolio from "./sections/Portfolio";
@@ -79,7 +79,7 @@ function Home() {
 			</div>
 
 			<Hero />
-			<Stats />
+			<Summary />
 			<Skills />
 			<Experience />
 			<Portfolio />

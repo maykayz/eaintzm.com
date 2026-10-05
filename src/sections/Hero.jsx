@@ -119,7 +119,32 @@ const Hero = () => {
           <span className="hidden md:block">Eaint Thazin Myint</span>
         </div>
 
-        <div className="relative flex-1 flex items-center justify-center min-h-0 translate-y-0 md:translate-y-[60px] lg:translate-y-[100px] xl:translate-y-[150px] 2xl:translate-y-[220px]">
+        <div className="md:hidden relative z-20 flex-1 flex flex-col min-h-0">
+          <div className="reveal flex flex-col gap-4 pt-36 shrink-0">
+            <h1 className="hero__title text-tan font-saunde uppercase leading-none text-left text-8xl">
+              Eaint
+            </h1>
+            <p className="text-secondary font-raleway text-sm leading-relaxed max-w-[220px]">
+              I'm a Frontend Developer crafting elegant, performant and
+              user-centered web experiences.
+            </p>
+            <div className="flex items-center gap-2 text-tan">
+              <span className="w-8 h-px bg-tan/60" />
+              <span className="text-sm">✦</span>
+            </div>
+          </div>
+
+          <div className="relative flex-1 min-h-0 mt-4">
+            <img
+              src={Portrait}
+              alt="Eaint Thazin Myint"
+              className="absolute -right-6 w-auto object-contain object-bottom"
+              style={{ bottom: "-4.5rem", height: "130%", filter: "brightness(0.68) contrast(1.05) saturate(1)" }}
+            />
+          </div>
+        </div>
+
+        <div className="hidden md:flex relative flex-1 items-center justify-center min-h-0 translate-y-0 md:translate-y-[60px] lg:translate-y-[100px] xl:translate-y-[150px] 2xl:translate-y-[220px]">
           <span
             ref={hiRef}
             className="hidden md:block absolute inset-x-0 top-0 text-center text-muted font-raleway text-sm md:text-base tracking-[0.3em] uppercase select-none pointer-events-none"
@@ -129,7 +154,7 @@ const Hero = () => {
 
           <h1
             ref={headlineRef}
-            className="hero__title absolute inset-x-0 z-0 text-center text-tan font-saunde uppercase leading-none select-none pointer-events-none text-[7rem] md:text-[8rem] lg:text-[10rem] xl:text-[13rem] 2xl:text-[26rem]"
+            className="hero__title absolute inset-x-0 z-0 text-center text-tan font-saunde uppercase leading-none select-none pointer-events-none text-[8rem] lg:text-[10rem] xl:text-[13rem] 2xl:text-[26rem]"
           >
             Eaint
           </h1>
@@ -138,14 +163,14 @@ const Hero = () => {
             ref={portraitRef}
             src={Portrait}
             alt="Eaint Thazin Myint"
-            className="relative z-10 h-[92%] md:h-[98%] w-auto object-contain object-bottom translate-x-0 md:translate-x-[6%] -translate-y-20 md:translate-y-0"
+            className="relative z-10 h-[98%] w-auto object-contain object-bottom translate-x-[6%]"
             style={{ filter: "brightness(0.68) contrast(1.05) saturate(1)" }}
           />
         </div>
 
         <div
           ref={bottomRef}
-          className="relative z-20 flex flex-col md:flex-row justify-between items-center md:items-end gap-6 md:gap-10 shrink-0"
+          className="hidden md:flex relative z-20 flex-row justify-between items-end gap-10 shrink-0"
         >
           <div className="hidden md:flex flex-col gap-3 max-w-xs">
             <p className="border-l-2 text-sm md:text-base border-maroon text-secondary text-left pl-5 font-raleway">
@@ -156,7 +181,7 @@ const Hero = () => {
           </div>
 
           <div className="flex flex-col gap-3 max-w-xs items-center text-center md:items-end md:text-right">
-            <p className="text-secondary font-raleway text-sm md:text-base">
+            <p className="hidden md:block text-secondary font-raleway text-sm md:text-base">
               I'm a Frontend Developer crafting elegant, performant and
               user-centered web experiences.
             </p>

@@ -352,7 +352,7 @@ const Portfolio = () => {
                 <div className="marquee w-full">
                     <div className="marquee__track [animation-duration:12s]">
                         {[...clients, ...clients].map((client, index) => (
-                            <div key={index} className="flex items-center px-10 shrink-0">
+                            <div key={index} className="flex items-center px-4 shrink-0">
                                 <img src={client.logo} alt={client.name} className={`${client.size || "h-5 md:h-24"} w-auto object-contain`} />
                             </div>
                         ))}

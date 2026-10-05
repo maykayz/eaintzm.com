@@ -63,7 +63,7 @@ const ContactMe = () => {
             </span>
 
             <div className="flex-1 flex items-center py-4 md:py-10 min-h-0">
-                <h1 className="reveal hero__title text-tan font-saunde leading-[1.15] md:leading-[0.9] text-3xl md:text-6xl lg:text-7xl uppercase max-w-4xl text-left">
+                <h1 className="reveal hero__title text-tan font-saunde leading-[1.4] md:leading-[0.9] text-4xl md:text-6xl lg:text-7xl uppercase max-w-4xl text-center md:text-left">
                     Have an idea in mind? Let's make it happen.
                 </h1>
             </div>

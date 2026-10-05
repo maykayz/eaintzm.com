@@ -41,7 +41,6 @@ import { FaCookieBite, FaAws } from "react-icons/fa6";
 import { BsOpenai } from "react-icons/bs";
 import { TbBrandAzure } from "react-icons/tb";
 import { VscAzureDevops } from "react-icons/vsc";
-import { skillCategories } from "../data/skills";
 import DomeGallery from "../components/DomeGallery";
 import Aurora from "../components/Aurora";
 
@@ -141,10 +140,8 @@ const BRAND_COLORS = {
 };
 
 
-const ALL_SKILLS = skillCategories.flatMap((c) => c.skills);
-
-const MOBILE_SKILLS = [
-    "React", "Next.js", "Vue", "TypeScript", "JavaScript", "Tailwind CSS",
+const MAJOR_SKILLS = [
+    "React", "Next.js", "Vue", "Nuxt.js", "TypeScript", "JavaScript", "Tailwind CSS",
     "Node.js", "MySQL", "Docker", "AWS", "Azure",
     "Google Analytics", "Jest", "Claude Code", "GitHub Copilot", "Sentry",
 ];
@@ -169,7 +166,7 @@ const skillToDataUri = (skill) => {
 
 const Skills = () => {
     const images = useMemo(
-        () => ALL_SKILLS.map((skill) => ({ src: skillToDataUri(skill), alt: skill })),
+        () => MAJOR_SKILLS.map((skill) => ({ src: skillToDataUri(skill), alt: skill })),
         []
     );
 
@@ -198,10 +195,10 @@ const Skills = () => {
                 </h1>
             </div>
 
-            <div className="hidden md:block reveal relative z-10 mt-4 md:mt-6" style={{ height: "500px" }}>
+            <div className="hidden md:block reveal relative z-10 mt-4 md:mt-6" style={{ height: "580px" }}>
                 <DomeGallery
                     images={images}
-                    fit={0.35}
+                    fit={0.3}
                     minRadius={220}
                     padFactor={0.1}
                     grayscale={false}
@@ -210,13 +207,13 @@ const Skills = () => {
                     openedImageBorderRadius="20px"
                     openedImageWidth="260px"
                     openedImageHeight="260px"
-                    segments={ALL_SKILLS.length <= 16 ? 16 : 30}
+                    segments={MAJOR_SKILLS.length <= 16 ? 16 : 30}
                     autoRotateSpeed={4}
                 />
             </div>
 
             <div className="md:hidden reveal relative z-10 flex flex-wrap justify-center gap-2 mt-8">
-                {MOBILE_SKILLS.map((skill) => {
+                {MAJOR_SKILLS.map((skill) => {
                     const Icon = ICONS[skill] || FiCpu;
                     const color = BRAND_COLORS[skill] || "#C98A93";
                     return (
