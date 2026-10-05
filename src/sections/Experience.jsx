@@ -128,8 +128,8 @@ const Experience = () => (
 
         {/* Desktop: card stack */}
         <div className="hidden md:flex relative z-10 flex-1 flex-col items-center justify-center min-h-0 gap-40">
-            <div className="reveal relative flex flex-col items-center gap-2 max-w-2xl mx-auto text-center shrink-0">
-                <h1 className="hero__title text-maroon font-saunde leading-[0.85] text-3xl md:text-4xl lg:text-5xl uppercase">
+            <div className="reveal relative flex flex-col items-center gap-2 max-w-2xl mx-auto text-center shrink-0 pt-3">
+                <h1 className="hero__title text-maroon font-saunde leading-[1.1] text-3xl md:text-4xl lg:text-5xl uppercase">
                     Experience
                 </h1>
                 <p className="text-secondary font-raleway leading-snug text-xs md:text-sm">

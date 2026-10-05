@@ -4,7 +4,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Dopa from "../assets/images/portfolio/dopa.png";
 import Datawow from "../assets/images/portfolio/datawow.png";
 import DriveSafeDrvr from "../assets/images/portfolio/drivesafe-map.jpg";
-import MyMemorial from "../assets/images/portfolio/mymemorial.jpg";
 import EasyPay from "../assets/images/portfolio/easypay.jpg";
 import Telenor from "../assets/images/portfolio/telenor.jpg";
 import PizzaHut from "../assets/images/portfolio/pizzahut.jpg";
@@ -35,16 +34,6 @@ const projects = [
         features: ["Mobile-first gacha UI", "Animated reveal sequences", "Localized for JP audience", "Lightweight, fast load"],
         tech: ["React", "Next.js", "TypeScript"],
         image: Dopa,
-    },
-    {
-        category: "Memorial Page · Rapid Data GmbH",
-        status: "Live",
-        title: "MyMemorial",
-        url: "mymemorial.com",
-        description: "Memorial page product for Rapid Data GmbH, built entirely through AI-driven development, where families and friends share photos and memories of the deceased, managed by funeral homes through our ERP.",
-        features: ["Memory wall & gallery", "Condolence & flower requests", "Death notice & funeral details", "White-labeled per funeral house"],
-        tech: [".NET", "PostgreSQL", "Next.js", "Jest", "Azure", "Docker", "Matomo", "CookieYes", "Webpack"],
-        image: MyMemorial,
     },
     {
         category: "Company Website · Thailand",
