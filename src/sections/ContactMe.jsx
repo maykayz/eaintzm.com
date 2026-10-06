@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { FiArrowUpRight } from "react-icons/fi";
 import CatCorner from "../components/CatCorner";
-import CVPDF from "../assets/files/EaintThazinMyint.pdf";
+// CV download hidden for now — restore this import and the link below to bring it back.
+// import CVPDF from "../assets/files/EaintThazinMyint.pdf";
 
 const EMAIL = "eaintzm@gmail.com";
 
@@ -82,6 +83,7 @@ const ContactMe = () => {
                         <FiArrowUpRight className="shrink-0 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" />
                     </a>
 
+                    {/* CV download hidden for now
                     <a
                         href={CVPDF}
                         target="_blank"
@@ -91,6 +93,7 @@ const ContactMe = () => {
                         Download CV
                         <FiArrowUpRight className="shrink-0 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1" />
                     </a>
+                    */}
                 </div>
 
                 <div ref={leftBlockRef} className="flex flex-col gap-2 md:gap-3 order-2 md:order-1">
