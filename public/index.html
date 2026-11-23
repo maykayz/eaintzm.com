@@ -134,7 +134,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
   </head>
-  <body>
+  <body style="background:#170B0D">
     <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WPDXT6KX"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -145,7 +145,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       JavaScript. React's createRoot replaces this content as soon as the app mounts.
     -->
     <div id="root">
-      <main style="background:#170B0D;color:#EDE6DC;min-height:100vh;padding:48px 24px;font-family:system-ui,sans-serif;line-height:1.6">
+      <!-- Crawler/no-JS fallback: visually hidden, replaced when React mounts -->
+      <main style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0">
         <div style="max-width:720px;margin:0 auto">
           <h1>Eaint Thazin Myint</h1>
           <p><strong>Software Engineer · Frontend Developer · UI/UX · growing into Full-Stack</strong></p>
